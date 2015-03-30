@@ -47,10 +47,6 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
             return color.shaded(amount);
         }
     }
-
-    collection.getPresetColor = function (name) {
-        return Color.fromString(name);
-    }
     ]]>
 </Script>
 
@@ -73,12 +69,16 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
              <Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
              <Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
          </PropertyGroup>
+         <PropertyGroup name="Style">
+             <Property name="dropdown" displayName="Dropdown type" type="Enum"
+                 p:enumValues="['none|None', 'dropdown|Dropdown', 'split|Split dropdown']">none</Property>
+         </PropertyGroup>
     </Properties>
     <Behaviors>
         <For ref="bg">
              <Box>$box</Box>
              <Fill>$fillColor //depends $textColor</Fill>
-             <StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.05) : $strokeColor</StrokeColor>
+             <StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
              <StrokeStyle>$strokeStyle</StrokeStyle>
         </For>
         <For ref="text">
@@ -91,12 +91,25 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
                 <Arg>$textAlign</Arg>
             </PlainTextContent>
         </For>
+        <For ref="arrow">
+            <Visibility>$dropdown.value != "none"</Visibility>
+            <D>"M " + ($box.w - ($dropdown.value == "split" ? 17 : 20)) + "," + (($box.h / 2) - 2) + " l 8,0 l -4,4 Z"</D>
+            <Fill>$textColor</Fill>
+        </For>
+        <For ref="split">
+            <Visibility>$dropdown.value == "split"</Visibility>
+            <D>"M" + ($box.w - 26) + ",0 l 0," + $box.h</D>
+            <StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
     </Behaviors>
 
     <p:Content	 xmlns:p="http://www.evolus.vn/Namespace/Pencil"
                                     xmlns="http://www.w3.org/2000/svg">
          <rect id="bg" rx="4px" ry="4px" />
          <text id="text"/>
+         <path id="arrow" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none" />
+         <path id="split" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none" />
     </p:Content>
 </Shape>
 
