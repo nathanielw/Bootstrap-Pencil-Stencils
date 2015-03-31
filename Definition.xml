@@ -9,283 +9,282 @@ author="Nathaniel Watson (nwatson.nz)"
 url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 
 <Properties>
-    <PropertyGroup name="Text">
-        <Property name="textFont" type="Font" displayName="Default Font">"Helvetica Neue", Helvetica, Arial, sans-serif|100|normal|14px</Property>
-        <Property name="textColor" type="Color" displayName="Default Text Color">#333333ff</Property>
-    </PropertyGroup>
-    <PropertyGroup name="Line">
-        <Property name="strokeColor" type="Color" displayName="Default Line Color">#000000FF</Property>
-        <Property name="strokeStyle" type="StrokeStyle" displayName="Default Line Style">1|</Property>
-    </PropertyGroup>
-    <PropertyGroup name="Colors: Grays">
-        <Property name="neutral" type="Color" displayName="Neutral">#ffffffff</Property>
-        <Property name="grayDarker" type="Color" displayName="gray-darker">#222222ff</Property>
-        <Property name="grayDark" type="Color" displayName="gray-dark">#050505ff</Property>
-    </PropertyGroup>
-    <PropertyGroup name="Colors: Grays (cont.)">
-        <Property name="gray" type="Color" displayName="gray">#545454ff</Property>
-        <Property name="grayLight" type="Color" displayName="gray-light">#777777ff</Property>
-        <Property name="grayLighter" type="Color" displayName="gray-lighter">#eeeeeeff</Property>
-    </PropertyGroup>
-    <PropertyGroup name="Colors: Brand">
-        <Property name="brandPrimary" type="Color" displayName="brand-primary">#337ab7ff</Property>
-        <Property name="brandSuccess" type="Color" displayName="brand-success">#5cb85cff</Property>
-        <Property name="brandInfo" type="Color" displayName="brand-info">#5bc0deff</Property>
-    </PropertyGroup>
-    <PropertyGroup name="Colors: Brand (cont.)">
-        <Property name="brandWarning" type="Color" displayName="brand-warning">#f0ad4eff</Property>
-        <Property name="brandDanger" type="Color" displayName="brand-danger">#d9534fff</Property>
-    </PropertyGroup>
+	<PropertyGroup name="Text">
+		<Property name="textFont" type="Font" displayName="Default Font">"Helvetica Neue", Helvetica, Arial, sans-serif|100|normal|14px</Property>
+		<Property name="textColor" type="Color" displayName="Default Text Color">#333333ff</Property>
+	</PropertyGroup>
+	<PropertyGroup name="Line">
+		<Property name="strokeColor" type="Color" displayName="Default Line Color">#ccccccff</Property>
+		<Property name="strokeStyle" type="StrokeStyle" displayName="Default Line Style">1|</Property>
+	</PropertyGroup>
+	<PropertyGroup name="Colors: Grays">
+		<Property name="neutral" type="Color" displayName="Neutral">#ffffffff</Property>
+		<Property name="grayDarker" type="Color" displayName="gray-darker">#222222ff</Property>
+		<Property name="grayDark" type="Color" displayName="gray-dark">#050505ff</Property>
+	</PropertyGroup>
+	<PropertyGroup name="Colors: Grays (cont.)">
+		<Property name="gray" type="Color" displayName="gray">#545454ff</Property>
+		<Property name="grayLight" type="Color" displayName="gray-light">#777777ff</Property>
+		<Property name="grayLighter" type="Color" displayName="gray-lighter">#eeeeeeff</Property>
+	</PropertyGroup>
+	<PropertyGroup name="Colors: Brand">
+		<Property name="brandPrimary" type="Color" displayName="brand-primary">#337ab7ff</Property>
+		<Property name="brandSuccess" type="Color" displayName="brand-success">#5cb85cff</Property>
+		<Property name="brandInfo" type="Color" displayName="brand-info">#5bc0deff</Property>
+	</PropertyGroup>
+	<PropertyGroup name="Colors: Brand (cont.)">
+		<Property name="brandWarning" type="Color" displayName="brand-warning">#f0ad4eff</Property>
+		<Property name="brandDanger" type="Color" displayName="brand-danger">#d9534fff</Property>
+	</PropertyGroup>
 </Properties>
 
 <Script>
-    <![CDATA[
-    collection.darken = function (color, amount) {
-        if (color.shaded(-amount).toRGBString() == Color.fromString("#FFFFFF").toRGBString() || color.transparent().toRGBAString() == color.toRGBAString()) {
-            return color.shaded(amount * 4);
-        } else {
-            return color.shaded(amount);
-        }
-    }
-    ]]>
+	<![CDATA[
+	collection.darken = function (color, amount) {
+		if (color.shaded(-amount).toRGBString() == Color.fromString("#FFFFFF").toRGBString() || color.transparent().toRGBAString() == color.toRGBAString()) {
+			return color.shaded(amount * 4);
+		} else {
+			return color.shaded(amount);
+		}
+	}
+	]]>
 </Script>
 
 <Shape id="Button" displayName="Button" icon="Icons/Button.png">
-    <Properties>
-         <PropertyGroup>
-              <Property name="box" type="Dimension">71,34</Property>
-              <Property name="smartColor" displayName="Automatic border color" type="Bool">true</Property>
-              <Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
-         </PropertyGroup>
-         <PropertyGroup name="Text">
-             <Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Button]]></Property>
-             <Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
-             <Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
-             <Property name="textAlign" displayName="Text Alignment" type="Alignment">1,1</Property>
-         </PropertyGroup>
-         <PropertyGroup name="Background">
-              <Property name="fillColor" displayName="Color" type="Color"><E>$$neutral</E></Property>
-         </PropertyGroup>
-         <PropertyGroup name="Border">
-             <Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
-             <Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
-         </PropertyGroup>
-         <PropertyGroup name="Style">
-             <Property name="dropdown" displayName="Dropdown type" type="Enum"
-                 p:enumValues="['none|None', 'dropdown|Dropdown', 'split|Split dropdown']">none</Property>
-             <Property name="position" displayName="Group position" type="Enum"
-                 p:enumValues="['none|None', 'left|Left', 'right|Right', 'middle|Middle', 'top|Top', 'bottom|Bottom']">none</Property>
-         </PropertyGroup>
-    </Properties>
-    <Behaviors>
-        <For ref="bg">
-            <D>
-                var tl, tr, br, bl; // Radius of each corner
-                var r = $radius.x;
-                switch ($position.value) {
-                    case "middle":
-                        tl = tr = br = bl = 0;
-                        break;
-                    case "left":
-                        tl = bl = r;
-                        tr = br = 0;
-                        break;
-                    case "right":
-                        tr = br = r;
-                        tl = bl =0;
-                        break;
-                    case "top":
-                        tl = tr = r;
-                        bl = br = 0;
-                        break;
-                    case "bottom":
-                        tl = tr = 0;
-                        bl = br = r;
-                        break;
-                    default:
-                        tl = tr = br =bl = r;
-                        break;
-                }
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">71,34</Property>
+			<Property name="smartColor" displayName="Automatic border color" type="Bool">true</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Button]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">1,1</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Color" type="Color"><E>$$neutral</E></Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Style">
+			<Property name="dropdown" displayName="Dropdown type" type="Enum"
+				p:enumValues="['none|None', 'dropdown|Dropdown', 'split|Split dropdown']">none</Property>
+			<Property name="position" displayName="Group position" type="Enum"
+				p:enumValues="['none|None', 'left|Left', 'right|Right', 'middle|Middle', 'top|Top', 'bottom|Bottom']">none</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="bg">
+			<D>
+				var tl, tr, br, bl; // Radius of each corner
+				var r = $radius.x;
+				switch ($position.value) {
+					case "middle":
+						tl = tr = br = bl = 0;
+						break;
+					case "left":
+						tl = bl = r;
+						tr = br = 0;
+						break;
+					case "right":
+						tr = br = r;
+						tl = bl =0;
+						break;
+					case "top":
+						tl = tr = r;
+						bl = br = 0;
+						break;
+					case "bottom":
+						tl = tr = 0;
+						bl = br = r;
+						break;
+					default:
+						tl = tr = br =bl = r;
+						break;
+				}
 
-                "M " + tl + ",0 L " + ($box.w - tr) + ",0 a " + tr + "," + tr + " 0 0,1 " + tr + "," + tr
-                + "l 0," + ($box.h - tr - br) + " a " + br + "," + br + " 0 0,1 " + -br + "," + br
-                + "L " + bl + "," + $box.h + " a " + bl + "," + bl + " 0 0,1 " + -bl + "," + -bl
-                + "L 0," + tl + " a " + tl + "," + tl + " 0 0,1 " + tl + "," + -tl + "Z"
-            </D>
-            <Fill>$fillColor //depends $textColor</Fill>
-            <StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
-            <StrokeStyle>$strokeStyle</StrokeStyle>
-        </For>
-        <For ref="text">
-            <Font>$textFont</Font>
-            <Fill>$textColor</Fill>
-            <Color>$textColor</Color>
-            <PlainTextContent>
-                <Arg>$textContent</Arg>
-                <Arg>Bound.fromBox($box, 6, 12)</Arg>
-                <Arg>$textAlign</Arg>
-            </PlainTextContent>
-        </For>
-        <For ref="arrow">
-            <Visibility>$dropdown.value != "none"</Visibility>
-            <D>"M " + ($box.w - ($dropdown.value == "split" ? 17 : 20)) + "," + (($box.h / 2) - 2) + " l 8,0 l -4,4 Z"</D>
-            <Fill>$textColor</Fill>
-        </For>
-        <For ref="split">
-            <Visibility>$dropdown.value == "split"</Visibility>
-            <D>"M" + ($box.w - 26) + ",0 l 0," + $box.h</D>
-            <StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
-            <StrokeStyle>$strokeStyle</StrokeStyle>
-        </For>
-    </Behaviors>
+				"M " + tl + ",0 L " + ($box.w - tr) + ",0 a " + tr + "," + tr + " 0 0,1 " + tr + "," + tr
+				+ "l 0," + ($box.h - tr - br) + " a " + br + "," + br + " 0 0,1 " + -br + "," + br
+				+ "L " + bl + "," + $box.h + " a " + bl + "," + bl + " 0 0,1 " + -bl + "," + -bl
+				+ "L 0," + tl + " a " + tl + "," + tl + " 0 0,1 " + tl + "," + -tl + "Z"
+			</D>
+			<Fill>$fillColor //depends $textColor</Fill>
+			<StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+		<For ref="text">
+			<Font>$textFont</Font>
+			<Fill>$textColor</Fill>
+			<Color>$textColor</Color>
+			<PlainTextContent>
+				<Arg>$textContent</Arg>
+				<Arg>Bound.fromBox($box, 6, 12)</Arg>
+				<Arg>$textAlign</Arg>
+			</PlainTextContent>
+		</For>
+		<For ref="arrow">
+			<Visibility>$dropdown.value != "none"</Visibility>
+			<D>"M " + ($box.w - ($dropdown.value == "split" ? 17 : 20)) + "," + (($box.h / 2) - 2) + " l 8,0 l -4,4 Z"</D>
+			<Fill>$textColor</Fill>
+		</For>
+		<For ref="split">
+			<Visibility>$dropdown.value == "split"</Visibility>
+			<D>"M" + ($box.w - 26) + ",0 l 0," + $box.h</D>
+			<StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+	</Behaviors>
 
-    <p:Content	 xmlns:p="http://www.evolus.vn/Namespace/Pencil"
-                                    xmlns="http://www.w3.org/2000/svg">
-         <path id="bg" />
-         <text id="text"/>
-         <path id="arrow" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none" />
-         <path id="split" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none" />
-    </p:Content>
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+									xmlns="http://www.w3.org/2000/svg">
+		<path id="bg" />
+		<text id="text"/>
+		<path id="arrow" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none" />
+		<path id="split" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none" />
+	</p:Content>
 </Shape>
 
 <Shortcut displayName="Button (primary)" icon="Icons/ButtonPrimary.png" to="Button">
-    <PropertyValue name="fillColor"><E>$$brandPrimary</E></PropertyValue>
-    <PropertyValue name="textColor">#FFFFFF</PropertyValue>
+	<PropertyValue name="fillColor"><E>$$brandPrimary</E></PropertyValue>
+	<PropertyValue name="textColor">#FFFFFF</PropertyValue>
 </Shortcut>
 
 <Shortcut displayName="Button (success)" icon="Icons/ButtonSuccess.png" to="Button">
-    <PropertyValue name="fillColor"><E>$$brandSuccess</E></PropertyValue>
-    <PropertyValue name="textColor">#FFFFFF</PropertyValue>
+	<PropertyValue name="fillColor"><E>$$brandSuccess</E></PropertyValue>
+	<PropertyValue name="textColor">#FFFFFF</PropertyValue>
 </Shortcut>
 
 <Shortcut displayName="Button (info)" icon="Icons/ButtonInfo.png" to="Button">
-    <PropertyValue name="fillColor"><E>$$brandInfo</E></PropertyValue>
-    <PropertyValue name="textColor">#FFFFFF</PropertyValue>
+	<PropertyValue name="fillColor"><E>$$brandInfo</E></PropertyValue>
+	<PropertyValue name="textColor">#FFFFFF</PropertyValue>
 </Shortcut>
 
 <Shortcut displayName="Button (warning)" icon="Icons/ButtonWarning.png" to="Button">
-    <PropertyValue name="fillColor"><E>$$brandWarning</E></PropertyValue>
-    <PropertyValue name="textColor">#FFFFFF</PropertyValue>
+	<PropertyValue name="fillColor"><E>$$brandWarning</E></PropertyValue>
+	<PropertyValue name="textColor">#FFFFFF</PropertyValue>
 </Shortcut>
 
 <Shortcut displayName="Button (danger)" icon="Icons/ButtonDanger.png" to="Button">
-    <PropertyValue name="fillColor"><E>$$brandDanger</E></PropertyValue>
-    <PropertyValue name="textColor">#FFFFFF</PropertyValue>
+	<PropertyValue name="fillColor"><E>$$brandDanger</E></PropertyValue>
+	<PropertyValue name="textColor">#FFFFFF</PropertyValue>
 </Shortcut>
 
 <Shape id="dropdown" displayName="Dropdown" icon="Icons/Dropdown.png">
-    <Properties>
-        <PropertyGroup>
-            <Property name="box" type="Dimension">172,90</Property>
-            <Property name="shadow" displayName="Shadow" type="Bool">true</Property>
-        </PropertyGroup>
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">172,90</Property>
+			<Property name="shadow" displayName="Shadow" type="Bool">true</Property>
+		</PropertyGroup>
 
-        <PropertyGroup name="Background">
-            <Property name="fillColor" displayName="Sheet Color" type="Color">#ffffffff</Property>
-            <Property name="selectedColor" displayName="Selected Color" type="Color">#f5f5f5ff</Property>
-        </PropertyGroup>
-        <PropertyGroup name="Border">
-            <Property name="strokeColor" displayName="Border Color" type="Color">#00000026</Property>
-            <Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
-        </PropertyGroup>
-        <PropertyGroup name="Text">
-            <Property name="contentText" displayName="Text Content" type="PlainText" p:editInfo="({targetName: 'content', bound: Bound.fromBox($box, 0, 5), font: $textFont, align: new Alignment(0, 0), multi: true})"><![CDATA[MenuItem*
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Sheet Color" type="Color">#ffffffff</Property>
+			<Property name="selectedColor" displayName="Selected Color" type="Color">#f5f5f5ff</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color">#00000026</Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="contentText" displayName="Text Content" type="PlainText" p:editInfo="({targetName: 'content', bound: Bound.fromBox($box, 0, 5), font: $textFont, align: new Alignment(0, 0), multi: true})"><![CDATA[MenuItem*
 MenuItem
 MenuItem]]></Property>
-            <Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
-            <Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
-            <Property name="textAlign" displayName="Text Alignment" type="Alignment">1,1</Property>
-        </PropertyGroup>
-    </Properties>
+			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">1,1</Property>
+		</PropertyGroup>
+	</Properties>
 
-    <Behaviors>
-        <For ref="bg">
-            <Bound>Bound.fromBox($box)</Bound>
-            <Fill>$fillColor</Fill>
-            <StrokeColor>$strokeColor</StrokeColor>
-            <StrokeStyle>$strokeStyle</StrokeStyle>
-        </For>
+	<Behaviors>
+		<For ref="bg">
+			<Bound>Bound.fromBox($box)</Bound>
+			<Fill>$fillColor</Fill>
+			<StrokeColor>$strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
 
-        <For ref="shadow">
-            <ApplyFilter>$shadow</ApplyFilter>
-            <Visibility>$shadow</Visibility>
-        </For>
+		<For ref="shadow">
+			<ApplyFilter>$shadow</ApplyFilter>
+			<Visibility>$shadow</Visibility>
+		</For>
 
-        <For ref="content">
-            <Bound>new Bound(1, 0, $box.w - 2, $box.h)</Bound>
-        </For>
+		<For ref="content">
+			<Bound>new Bound(1, 0, $box.w - 2, $box.h)</Bound>
+		</For>
 
-        <For ref="list">
-            <DomContent>
-                <![CDATA[
+		<For ref="list">
+			<DomContent>
+				<![CDATA[
 
-                var items = $contentText.value.split(/[\r\n]+/);
+				var items = $contentText.value.split(/[\r\n]+/);
 
-                var specs = [];
+				var specs = [];
 
-                for (var i = 0; i < items.length; i++) {
-                    var text = items[i];
+				for (var i = 0; i < items.length; i++) {
+					var text = items[i];
 
-                    var css = CSS.fromString("padding: 4px 20px;");
+					var css = CSS.fromString("padding: 4px 20px;");
 
-                    if (text.match(/(.*)\*$/)) {
-                        text = RegExp.$1;
-                        css.set("background", $selectedColor.toRGBString());
-                    }
+					if (text.match(/(.*)\*$/)) {
+						text = RegExp.$1;
+						css.set("background", $selectedColor.toRGBString());
+					}
 
-                    specs.push({
-                        _name: "li",
-                        _uri: "http://www.w3.org/1999/xhtml",
-                        _text: text,
-                        style: css
-                    });
-                }
+					specs.push({
+						_name: "li",
+						_uri: "http://www.w3.org/1999/xhtml",
+						_text: text,
+						style: css
+					});
+				}
 
-                Dom.newDOMFragment(specs);
-                ]]>
-            </DomContent>
+				Dom.newDOMFragment(specs);
+				]]>
+			</DomContent>
 
-            <Font>$textFont</Font>
-            <Color>$textColor</Color>
-        </For>
-    </Behaviors>
+			<Font>$textFont</Font>
+			<Color>$textColor</Color>
+		</For>
+	</Behaviors>
 
-    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns="http://www.w3.org/2000/svg">
+	<p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns="http://www.w3.org/2000/svg">
 
-        <defs>
-            <filter id="dropShadow" height="1.5" y="-0.2">
-                <feFlood
-                    flood-opacity="0.176"
-                    flood-color="rgb(0,0,0)"
-                    result="flood"
-                    id="flood" />
-                <feComposite
-                    in="flood"
-                    in2="SourceGraphic"
-                    operator="in" />
-                <feGaussianBlur
-                    stdDeviation="6" />
-                <feOffset
-                    dx="0"
-                    dy="6" />
-            </filter>
+		<defs>
+			<filter id="dropShadow" height="1.5" y="-0.2">
+				<feFlood
+					flood-opacity="0.176"
+					flood-color="rgb(0,0,0)"
+					result="flood"
+					id="flood" />
+				<feComposite
+					in="flood"
+					in2="SourceGraphic"
+					operator="in" />
+				<feGaussianBlur
+					stdDeviation="6" />
+				<feOffset
+					dx="0"
+					dy="6" />
+			</filter>
 
-            <rect id="bg" rx="4px" ry="4px" />
-        </defs>
+			<rect id="bg" rx="4px" ry="4px" />
+		</defs>
 
-        <use xlink:href="#bg" id="shadow" p:heavy="true" p:filter="url(#dropShadow)" />
-        <use xlink:href="#bg" />
+		<use xlink:href="#bg" id="shadow" p:heavy="true" p:filter="url(#dropShadow)" />
+		<use xlink:href="#bg" />
 
-        <foreignObject id="content">
-            <div xmlns="http://www.w3.org/1999/xhtml" >
-                <ul id="list" style="list-style: none;
-                        text-indent: 0;
-                        padding: 5px 0;">
-                    <!-- content -->
-                </ul>
-            </div>
-        </foreignObject>
-    </p:Content>
+		<foreignObject id="content">
+			<div xmlns="http://www.w3.org/1999/xhtml" >
+				<ul id="list" style="list-style: none;
+						text-indent: 0;
+						padding: 5px 0;">
+					<!-- content -->
+				</ul>
+			</div>
+		</foreignObject>
+	</p:Content>
 </Shape>
-
 </Shapes>
