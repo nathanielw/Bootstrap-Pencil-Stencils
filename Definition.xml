@@ -138,4 +138,119 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
     <PropertyValue name="textColor">#FFFFFF</PropertyValue>
 </Shortcut>
 
+<Shape id="dropdown" displayName="Dropdown" icon="Icons/Dropdown.png">
+    <Properties>
+        <PropertyGroup>
+            <Property name="box" type="Dimension">172,90</Property>
+            <Property name="shadow" displayName="Shadow" type="Bool">true</Property>
+        </PropertyGroup>
+
+        <PropertyGroup name="Background">
+            <Property name="fillColor" displayName="Sheet Color" type="Color">#ffffffff</Property>
+            <Property name="selectedColor" displayName="Selected Color" type="Color">#f5f5f5ff</Property>
+        </PropertyGroup>
+        <PropertyGroup name="Border">
+            <Property name="strokeColor" displayName="Border Color" type="Color">#00000026</Property>
+            <Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+        </PropertyGroup>
+        <PropertyGroup name="Text">
+            <Property name="contentText" displayName="Text Content" type="PlainText" p:editInfo="({targetName: 'content', bound: Bound.fromBox($box, 0, 5), font: $textFont, align: new Alignment(0, 0), multi: true})"><![CDATA[MenuItem*
+MenuItem
+MenuItem]]></Property>
+            <Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
+            <Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
+            <Property name="textAlign" displayName="Text Alignment" type="Alignment">1,1</Property>
+        </PropertyGroup>
+    </Properties>
+
+    <Behaviors>
+        <For ref="bg">
+            <Bound>Bound.fromBox($box)</Bound>
+            <Fill>$fillColor</Fill>
+            <StrokeColor>$strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
+        </For>
+
+        <For ref="shadow">
+            <ApplyFilter>$shadow</ApplyFilter>
+            <Visibility>$shadow</Visibility>
+        </For>
+
+        <For ref="content">
+            <Bound>new Bound(1, 0, $box.w - 2, $box.h)</Bound>
+        </For>
+
+        <For ref="list">
+            <DomContent>
+                <![CDATA[
+
+                var items = $contentText.value.split(/[\r\n]+/);
+
+                var specs = [];
+
+                for (var i = 0; i < items.length; i++) {
+                    var text = items[i];
+
+                    var css = CSS.fromString("padding: 4px 20px;");
+
+                    if (text.match(/(.*)\*$/)) {
+                        text = RegExp.$1;
+                        css.set("background", $selectedColor.toRGBString());
+                    }
+
+                    specs.push({
+                        _name: "li",
+                        _uri: "http://www.w3.org/1999/xhtml",
+                        _text: text,
+                        style: css
+                    });
+                }
+
+                Dom.newDOMFragment(specs);
+                ]]>
+            </DomContent>
+
+            <Font>$textFont</Font>
+            <Color>$textColor</Color>
+        </For>
+    </Behaviors>
+
+    <p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns="http://www.w3.org/2000/svg">
+
+        <defs>
+            <filter id="dropShadow" height="1.5" y="-0.2">
+                <feFlood
+                    flood-opacity="0.176"
+                    flood-color="rgb(0,0,0)"
+                    result="flood"
+                    id="flood" />
+                <feComposite
+                    in="flood"
+                    in2="SourceGraphic"
+                    operator="in" />
+                <feGaussianBlur
+                    stdDeviation="6" />
+                <feOffset
+                    dx="0"
+                    dy="6" />
+            </filter>
+
+            <rect id="bg" rx="4px" ry="4px" />
+        </defs>
+
+        <use xlink:href="#bg" id="shadow" p:heavy="true" p:filter="url(#dropShadow)" />
+        <use xlink:href="#bg" />
+
+        <foreignObject id="content">
+            <div xmlns="http://www.w3.org/1999/xhtml" >
+                <ul id="list" style="list-style: none;
+                        text-indent: 0;
+                        padding: 5px 0;">
+                    <!-- content -->
+                </ul>
+            </div>
+        </foreignObject>
+    </p:Content>
+</Shape>
+
 </Shapes>
