@@ -112,7 +112,7 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 				+ "L " + bl + "," + $box.h + " a " + bl + "," + bl + " 0 0,1 " + -bl + "," + -bl
 				+ "L 0," + tl + " a " + tl + "," + tl + " 0 0,1 " + tl + "," + -tl + "Z"
 			</D>
-			<Fill>$fillColor //depends $textColor</Fill>
+			<Fill>$fillColor</Fill>
 			<StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
 			<StrokeStyle>$strokeStyle</StrokeStyle>
 		</For>
@@ -285,6 +285,125 @@ MenuItem]]></Property>
 				</ul>
 			</div>
 		</foreignObject>
+	</p:Content>
+</Shape>
+
+<Shape id="textInput" displayName="Text Input" icon="Icons/textInput.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">100,34</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
+			<Property name="focused" displayName="Focused" type="Bool">false</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$gray</E></Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">0,1</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Color" type="Color"><E>$$neutral</E></Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
+			<Property name="activeColor" displayName="Active Color" type="Color">#66afe9ff</Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Style">
+			<Property name="position" displayName="Group position" type="Enum"
+				p:enumValues="['none|None', 'left|Left', 'right|Right', 'middle|Middle']">none</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="bg">
+			<D>
+				var tl, tr, br, bl; // Radius of each corner
+				var r = $radius.x;
+				switch ($position.value) {
+					case "middle":
+						tl = tr = br = bl = 0;
+						break;
+					case "left":
+						tl = bl = r;
+						tr = br = 0;
+						break;
+					case "right":
+						tr = br = r;
+						tl = bl =0;
+						break;
+					default:
+						tl = tr = br =bl = r;
+						break;
+				}
+
+				"M " + tl + ",0 L " + ($box.w - tr) + ",0 a " + tr + "," + tr + " 0 0,1 " + tr + "," + tr
+				+ "l 0," + ($box.h - tr - br) + " a " + br + "," + br + " 0 0,1 " + -br + "," + br
+				+ "L " + bl + "," + $box.h + " a " + bl + "," + bl + " 0 0,1 " + -bl + "," + -bl
+				+ "L 0," + tl + " a " + tl + "," + tl + " 0 0,1 " + tl + "," + -tl + "Z"
+			</D>
+		</For>
+
+		<For ref="bgActual">
+			<StrokeColor>$focused.value ? $activeColor : $strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+
+		<For ref="text">
+			<Font>$textFont</Font>
+			<Fill>$textColor</Fill>
+			<Color>$textColor</Color>
+			<PlainTextContent>
+				<Arg>$textContent</Arg>
+				<Arg>Bound.fromBox($box, 12, 6)</Arg>
+				<Arg>$textAlign</Arg>
+			</PlainTextContent>
+		</For>
+
+		<For ref="stop1">
+			<StopColor>collection.darken($fillColor, 0.02)</StopColor>
+		</For>
+
+		<For ref="stop2">
+			<StopColor>$fillColor</StopColor>
+			<Offset>3.4 / $box.h</Offset>
+		</For>
+
+		<For ref="glow">
+			<ApplyFilter>$focused</ApplyFilter>
+			<Visibility>$focused</Visibility>
+			<Fill>$activeColor</Fill>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns="http://www.w3.org/2000/svg">
+		<defs>
+			<filter id="glowBlur" height="1.5" y="-0.2">
+				<feGaussianBlur
+					stdDeviation="4" />
+			</filter>
+
+			<linearGradient
+				id="shadowFill"
+				x1="0%"
+				y1="0%"
+				x2="0%"
+				y2="100%" >
+
+				<stop
+					id="stop1"
+					offset="0"
+					style="stop-color:#FFFFFF;stop-opacity:1" />
+				<stop
+					id="stop2"
+					offset="1"
+					style="stop-color:#FFFFFF;stop-opacity:1" />
+			</linearGradient>
+
+			<path id="bg" />
+		</defs>
+		<use xlink:href="#bg" id="glow" p:heavy="true" p:filter="url(#glowBlur)" style="opacity:0.6" />
+		<use xlink:href="#bg" id="bgActual" style="fill: url(#shadowFill)" />
+		<text id="text"/>
 	</p:Content>
 </Shape>
 </Shapes>
