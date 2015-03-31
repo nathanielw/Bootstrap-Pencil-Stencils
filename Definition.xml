@@ -55,6 +55,7 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
          <PropertyGroup>
               <Property name="box" type="Dimension">71,34</Property>
               <Property name="smartColor" displayName="Automatic border color" type="Bool">true</Property>
+              <Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
          </PropertyGroup>
          <PropertyGroup name="Text">
              <Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Button]]></Property>
@@ -72,14 +73,48 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
          <PropertyGroup name="Style">
              <Property name="dropdown" displayName="Dropdown type" type="Enum"
                  p:enumValues="['none|None', 'dropdown|Dropdown', 'split|Split dropdown']">none</Property>
+             <Property name="position" displayName="Group position" type="Enum"
+                 p:enumValues="['none|None', 'left|Left', 'right|Right', 'middle|Middle', 'top|Top', 'bottom|Bottom']">none</Property>
          </PropertyGroup>
     </Properties>
     <Behaviors>
         <For ref="bg">
-             <Box>$box</Box>
-             <Fill>$fillColor //depends $textColor</Fill>
-             <StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
-             <StrokeStyle>$strokeStyle</StrokeStyle>
+            <D>
+                var tl, tr, br, bl; // Radius of each corner
+                var r = $radius.x;
+                switch ($position.value) {
+                    case "middle":
+                        tl = tr = br = bl = 0;
+                        break;
+                    case "left":
+                        tl = bl = r;
+                        tr = br = 0;
+                        break;
+                    case "right":
+                        tr = br = r;
+                        tl = bl =0;
+                        break;
+                    case "top":
+                        tl = tr = r;
+                        bl = br = 0;
+                        break;
+                    case "bottom":
+                        tl = tr = 0;
+                        bl = br = r;
+                        break;
+                    default:
+                        tl = tr = br =bl = r;
+                        break;
+                }
+
+                "M " + tl + ",0 L " + ($box.w - tr) + ",0 a " + tr + "," + tr + " 0 0,1 " + tr + "," + tr
+                + "l 0," + ($box.h - tr - br) + " a " + br + "," + br + " 0 0,1 " + -br + "," + br
+                + "L " + bl + "," + $box.h + " a " + bl + "," + bl + " 0 0,1 " + -bl + "," + -bl
+                + "L 0," + tl + " a " + tl + "," + tl + " 0 0,1 " + tl + "," + -tl + "Z"
+            </D>
+            <Fill>$fillColor //depends $textColor</Fill>
+            <StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
+            <StrokeStyle>$strokeStyle</StrokeStyle>
         </For>
         <For ref="text">
             <Font>$textFont</Font>
@@ -106,7 +141,7 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 
     <p:Content	 xmlns:p="http://www.evolus.vn/Namespace/Pencil"
                                     xmlns="http://www.w3.org/2000/svg">
-         <rect id="bg" rx="4px" ry="4px" />
+         <path id="bg" />
          <text id="text"/>
          <path id="arrow" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none" />
          <path id="split" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none" />
