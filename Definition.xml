@@ -10,7 +10,7 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 
 <Properties>
 	<PropertyGroup name="Text">
-		<Property name="textFont" type="Font" displayName="Default Font">"Helvetica Neue", Helvetica, Arial, sans-serif|100|normal|14px</Property>
+		<Property name="textFont" type="Font" displayName="Default Font">"Helvetica Neue", Helvetica, Arial, sans-serif|400|normal|14px</Property>
 		<Property name="textColor" type="Color" displayName="Default Text Color">#333333ff</Property>
 	</PropertyGroup>
 	<PropertyGroup name="Line">
@@ -406,4 +406,84 @@ MenuItem]]></Property>
 		<text id="text"/>
 	</p:Content>
 </Shape>
+
+<Shape id="Label" displayName="Label" icon="Icons/Label.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">50,21</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">2,0</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Label]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font">"Helvetica Neue", Helvetica, Arial, sans-serif|bold|normal|10px</Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$neutral</E></Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">1,1</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Color" type="Color"><E>$$grayLight</E></Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">0|</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="bg">
+			<Box>$box</Box>
+			<Radius>
+				<Arg>$radius.x</Arg>
+				<Arg>$radius.x</Arg>
+			</Radius>
+			<Fill>$fillColor</Fill>
+			<StrokeColor>$strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+		<For ref="text">
+			<Font>$textFont</Font>
+			<Fill>$textColor</Fill>
+			<Color>$textColor</Color>
+			<PlainTextContent>
+				<Arg>$textContent</Arg>
+				<Arg>Bound.fromBox($box, 6, 3)</Arg>
+				<Arg>$textAlign</Arg>
+			</PlainTextContent>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+									xmlns="http://www.w3.org/2000/svg">
+		<rect id="bg" />
+		<text id="text"/>
+	</p:Content>
+</Shape>
+
+<Shortcut displayName="Label (primary)" icon="Icons/LabelPrimary.png" to="Label">
+	<PropertyValue name="fillColor"><E>$$brandPrimary</E></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Label (success)" icon="Icons/LabelSuccess.png" to="Label">
+	<PropertyValue name="fillColor"><E>$$brandSuccess</E></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Label (info)" icon="Icons/LabelInfo.png" to="Label">
+	<PropertyValue name="fillColor"><E>$$brandInfo</E></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Label (warning)" icon="Icons/LabelWarning.png" to="Label">
+	<PropertyValue name="fillColor"><E>$$brandWarning</E></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Label (danger)" icon="Icons/LabelDanger.png" to="Label">
+	<PropertyValue name="fillColor"><E>$$brandDanger</E></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Badge" icon="Icons/Badge.png" to="Label">
+	<PropertyValue name="fillColor"><E>$$grayLight</E></PropertyValue>
+	<PropertyValue name="radius">18,0</PropertyValue>
+	<PropertyValue name="box">28,18</PropertyValue>
+	<PropertyValue name="textContent"><![CDATA[42]]></PropertyValue>
+	<PropertyValue name="textFont">"Helvetica Neue", Helvetica, Arial, sans-serif|bold|normal|12px</PropertyValue>
+
+</Shortcut>
+
 </Shapes>
