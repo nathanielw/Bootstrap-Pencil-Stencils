@@ -483,7 +483,75 @@ MenuItem]]></Property>
 	<PropertyValue name="box">28,18</PropertyValue>
 	<PropertyValue name="textContent"><![CDATA[42]]></PropertyValue>
 	<PropertyValue name="textFont">"Helvetica Neue", Helvetica, Arial, sans-serif|bold|normal|12px</PropertyValue>
-
 </Shortcut>
 
+<Shape id="Tab" displayName="Tab (Selected)" icon="Icons/Tab.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">98,42</Property>
+			<Property name="selected" displayName="Selected" type="Bool">true</Property>
+			<Property name="dropdown" displayName="Dropdown" type="Bool">false</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h" p:noScale="true">4,0</Property>
+			<Property name="leftLine" displayName="Left Underline" type="Handle" p:lockY="true" p:disabled="!$selected.value">-50,42</Property>
+			<Property name="rightLine" displayName="Right Underline" type="Handle" p:lockY="true" p:disabled="!$selected.value">148,42</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Tab]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">1,1</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Color" type="Color">#ffffff00</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="bg">
+			<D>
+				var tl, tr; // Radius of top corners
+				tl = tr = $radius.x;
+
+				"M " + ($selected.value ? + $leftLine.x : "0") + "," + $box.h
+				+ "L 0," + $box.h + " L 0," + tl + " a " + tl + "," + tl + " 0 0,1 " + tl + "," + -tl
+				+ "L " + ($box.w - tr) + ",0 a " + tr + "," + tr + " 0 0,1 " + tr + "," + tr
+				+ "l 0," + ($box.h - tr)
+				+ ($selected.value ? "L " + $rightLine.x + "," + $box.h : "")
+			</D>
+			<Fill>$fillColor</Fill>
+			<StrokeColor>$strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+		<For ref="text">
+			<Font>$textFont</Font>
+			<Fill>$textColor</Fill>
+			<Color>$textColor</Color>
+			<PlainTextContent>
+				<Arg>$textContent</Arg>
+				<Arg>Bound.fromBox($box, 15, 10)</Arg>
+				<Arg>$textAlign</Arg>
+			</PlainTextContent>
+		</For>
+		<For ref="arrow">
+			<Visibility>$dropdown.value</Visibility>
+			<D>"M " + ($box.w - 20) + "," + (($box.h / 2) - 2) + " l 8,0 l -4,4 Z"</D>
+			<Fill>$textColor</Fill>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"	xmlns="http://www.w3.org/2000/svg">
+		<path id="bg" />
+		<text id="text"/>
+		<path id="arrow" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none" />
+	</p:Content>
+</Shape>
+
+<Shortcut displayName="Tab (Unselected)" icon="Icons/TabUnselected.png" to="Tab">
+	<PropertyValue name="strokeStyle">0|</PropertyValue>
+	<PropertyValue name="selected">false</PropertyValue>
+	<PropertyValue name="textColor"><E>$$brandPrimary</E></PropertyValue>
+</Shortcut>
 </Shapes>
