@@ -554,4 +554,59 @@ MenuItem]]></Property>
 	<PropertyValue name="selected">false</PropertyValue>
 	<PropertyValue name="textColor"><E>$$brandPrimary</E></PropertyValue>
 </Shortcut>
+
+<Shape id="PillTab" displayName="Pill Tab" icon="Icons/PillTab.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">67,40</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Label]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$neutral</E></Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">1,1</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Color" type="Color"><E>$$brandPrimary</E></Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">0|</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="bg">
+			<Box>$box</Box>
+			<Radius>
+				<Arg>$radius.x</Arg>
+				<Arg>$radius.x</Arg>
+			</Radius>
+			<Fill>$fillColor</Fill>
+			<StrokeColor>$strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+		<For ref="text">
+			<Font>$textFont</Font>
+			<Fill>$textColor</Fill>
+			<Color>$textColor</Color>
+			<PlainTextContent>
+				<Arg>$textContent</Arg>
+				<Arg>Bound.fromBox($box, 15, 10)</Arg>
+				<Arg>$textAlign</Arg>
+			</PlainTextContent>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+									xmlns="http://www.w3.org/2000/svg">
+		<rect id="bg" />
+		<text id="text"/>
+	</p:Content>
+</Shape>
+
+<Shortcut displayName="Pill Tab (Unselected)" icon="Icons/PillTabUnselected.png" to="PillTab">
+	<PropertyValue name="textColor"><E>$$brandPrimary</E></PropertyValue>
+	<PropertyValue name="fillColor">#ffffff00</PropertyValue>
+</Shortcut>
 </Shapes>
