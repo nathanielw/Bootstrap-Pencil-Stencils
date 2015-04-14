@@ -41,6 +41,8 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 <Script>
 	<![CDATA[
 	collection.darken = function (color, amount) {
+		// TODO: re-implement this to work in the same way as LESS's darken function (i.e. changing the L portion of an HSL colour)
+
 		if (color.shaded(-amount).toRGBString() == Color.fromString("#FFFFFF").toRGBString() || color.transparent().toRGBAString() == color.toRGBAString()) {
 			return color.shaded(amount * 4);
 		} else {
@@ -609,4 +611,57 @@ MenuItem]]></Property>
 	<PropertyValue name="textColor"><E>$$brandPrimary</E></PropertyValue>
 	<PropertyValue name="fillColor">#ffffff00</PropertyValue>
 </Shortcut>
+
+<Shape id="Alert" displayName="Alert" icon="Icons/Alert.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">1024,52</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="RichText"><![CDATA[<b>Well done!</b> You successfully read this important alert message.]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
+			<Property name="textColor" displayName="Text Color" type="Color">#3c763d</Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">0,1</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Color" type="Color">#dff0d8</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color">#D6E9C6</Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="bg">
+			<Box>$box</Box>
+			<Radius>
+				<Arg>$radius.x</Arg>
+				<Arg>$radius.x</Arg>
+			</Radius>
+			<Fill>$fillColor</Fill>
+			<StrokeColor>$strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+		<For ref="text">
+			<Box>$box</Box>
+			<Font>$textFont</Font>
+			<Color>$textColor</Color>
+			<TextContent>$textContent</TextContent>
+			<BoxFit>
+				<Arg>Bound.fromBox($box, 15)</Arg>
+				<Arg>$textAlign</Arg>
+			</BoxFit>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+									xmlns="http://www.w3.org/2000/svg">
+		<rect id="bg" />
+		<foreignObject x="0" y="0" width="200" height="150" id="text">
+				<div xmlns="http://www.w3.org/1999/xhtml">
+				</div>
+		</foreignObject>
+	</p:Content>
+</Shape>
 </Shapes>
