@@ -664,4 +664,102 @@ MenuItem]]></Property>
 		</foreignObject>
 	</p:Content>
 </Shape>
+
+
+<Shape id="ProgressBar" displayName="Progress Bar" icon="Icons/ProgressBar.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">400,20</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
+			<Property name="progress" displayName="Progress" type="Handle" p:lockY="true" p:minX="0" p:minY="$box.h" p:maxX="$box.w">300,0</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="bgFillColor" displayName="Color" type="Color">#f5f5f5ff</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Foreground">
+			<Property name="fillColor" displayName="Color" type="Color"><E>$$brandPrimary</E></Property>
+		</PropertyGroup>
+		<PropertyGroup name="Style">
+			<Property name="striped" displayName="Striped" type="Bool">false</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="area">
+			<Box>$box</Box>
+			<Radius>$radius.x</Radius>
+		</For>
+
+		<For ref="clipRect">
+			<Bound>new Bound($box.x, $box.x, $progress.x, $box.h)</Bound>
+		</For>
+
+		<For ref="bg">
+			<Fill>$bgFillColor</Fill>
+		</For>
+
+		<For ref="fg">
+			<Fill>$fillColor</Fill>
+		</For>
+
+		<For ref="stripes">
+			<Visibility>$striped.value</Visibility>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+									xmlns="http://www.w3.org/2000/svg">
+		<def>
+			<rect id="area" />
+
+			<clipPath id="progressClip">
+				<rect id="clipRect" />
+      		</clipPath>
+
+			<filter id="innerShadow">
+				<feFlood
+				flood-opacity="0.3"
+				flood-color="rgb(0,0,0)"
+				result="flood" />
+				<feComposite
+				in="flood"
+				in2="SourceGraphic"
+				operator="out" />
+				<feGaussianBlur
+				stdDeviation="1.4" />
+				<feOffset
+				dx="0"
+				dy="1" />
+				<feComposite
+				in2="SourceGraphic"
+				operator="atop" />
+			</filter>
+
+			<pattern id="stripes"
+			x="0" y="0" width="28" height="20"
+			patternUnits="userSpaceOnUse"
+			patternTransform="rotate(-45)" >
+				<rect x="0" y="0" width="14px" height="20px" style="opacity:0.15; stroke: none; fill: #ffffff" />
+			</pattern>
+		</def>
+		<use xlink:href="#area" id="bg" style="filter:url(#innerShadow)" />
+		<use xlink:href="#area" id="fg" style="clip-path: url(#progressClip);" />
+		<use xlink:href="#area" id="stripes" style="clip-path: url(#progressClip); fill: url(#stripes);" />
+	</p:Content>
+</Shape>
+
+<Shortcut displayName="Progress Bar (success)" icon="Icons/ProgressBarSuccess.png" to="ProgressBar">
+	<PropertyValue name="fillColor"><E>$$brandSuccess</E></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Progress Bar (info)" icon="Icons/ProgressBarInfo.png" to="ProgressBar">
+	<PropertyValue name="fillColor"><E>$$brandInfo</E></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Progress Bar (warning)" icon="Icons/ProgressBarWarning.png" to="ProgressBar">
+	<PropertyValue name="fillColor"><E>$$brandWarning</E></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Progress Bar (danger)" icon="Icons/ProgressBarDanger.png" to="ProgressBar">
+	<PropertyValue name="fillColor"><E>$$brandDanger</E></PropertyValue>
+</Shortcut>
 </Shapes>
