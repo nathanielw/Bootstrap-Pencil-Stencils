@@ -40,15 +40,129 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 
 <Script>
 	<![CDATA[
-	collection.darken = function (color, amount) {
-		// TODO: re-implement this to work in the same way as LESS's darken function (i.e. changing the L portion of an HSL colour)
+	/**
+	 * Takes RGB values (each between 0 and 255) and returns the corresponding HSL values (H between 0 and 360, S and L each between 0 and 100).
+	 * Based on http://stackoverflow.com/a/9493060
+	 */
+	collection.rgbToHsl = function(r, g, b) {
+		var max, min, h, s, l;
 
-		if (color.shaded(-amount).toRGBString() == Color.fromString("#FFFFFF").toRGBString() || color.transparent().toRGBAString() == color.toRGBAString()) {
-			return color.shaded(amount * 4);
+		r = r / 255;
+		g = g / 255;
+		b = b / 255;
+
+		max = Math.max(r, g, b);
+		min = Math.min(r, g, b);
+
+		l = (min + max) / 2;
+
+		diff = max - min;
+
+		if (diff == 0) {
+			s = 0;
+			h = 0;
 		} else {
-			return color.shaded(amount);
+			if(l > 0.5) {
+				s = (diff) / (2 - min - max)
+			} else {
+				s = diff / (max + min)
+			}
+
+			switch(max) {
+				case r:
+					h = (g - b) / diff + (g < b ? 6 : 0);
+					break;
+				case g:
+					h = (b - r) / diff + 2;
+					break;
+				case b:
+					h = (r - g) / diff + 4;
+					break;
+			}
 		}
+
+		return {h: Math.round(h * 60), s: Math.round(s * 100), l: Math.round(l * 100)};
 	}
+
+	/**
+	 * Takes HSL values (H between 0 and 360, S and L each between 0 and 100) and returns the corresponding RGB values (each between 0 and 255)
+	 * Based on pseudo-code in the W3 Color Model document (http://www.w3.org/TR/2011/REC-css3-color-20110607/#hsl-color)
+	 */
+	collection.hslToRgb = function (h, s, l) {
+		var m1, m2, m3, r, g, b;
+
+		h = h / 360;
+		s = s / 100;
+		l = l / 100;
+
+		m2 = l <= 0.5 ? l * (s + 1) : l + s - l * s;
+
+		m1 = l * 2 - m2;
+
+		r = collection.hueToRgb(m1, m2, h + 1/3);
+		g = collection.hueToRgb(m1, m2, h);
+		b = collection.hueToRgb(m1, m2, h - 1/3);
+
+		return {r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255)};
+	}
+
+	collection.hueToRgb = function (m1, m2, h) {
+		if(h < 0) {
+			h = h + 1;
+		} else if(h > 1) {
+			h = h - 1;
+		}
+
+		if(h*6 < 1) {
+			return m1 + (m2 - m1) * h * 6;
+		} else if(h*2 < 1) {
+			return m2;
+		} else if(h*3 < 2) {
+			return m1 + (m2 - m1) * (2/3 - h) * 6
+		}
+
+		return m1;
+	}
+
+	/**
+	 * Darkens the given color by the given amount (a number between 0 and 100)
+	 */
+	collection.darken = function (color, amount) {
+		return collection._adjustLightness(color, -amount);
+	}
+
+	/**
+	 * Lightens the given color by the given amount (a number between 0 and 100)
+	 */
+	collection.lighten = function (color, amount) {
+		return collection._adjustLightness(color, amount);
+	}
+
+	/**
+	 * Offsets the hue of a color by the given amount (in degrees)
+	 */
+	collection.spin = function (color, amount) {
+		var hsl = collection.rgbToHsl(color.r, color.g, color.b);
+		newH = (hsl.h + amount) % 360;
+		hsl.h = (newH >= 0 ? newH : newH + 360);
+
+		rgb = collection.hslToRgb(hsl.h, hsl.s, hsl.l);
+
+		return Color.fromString("rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + color.a + ")");
+	}
+
+	/**
+	 * Changes the lightness of the given color by the given amount (a number between -100 and 100)
+	 */
+	collection._adjustLightness = function (color, amount) {
+		var hsl = collection.rgbToHsl(color.r, color.g, color.b);
+
+		hsl.l = Math.min(Math.max(hsl.l + amount, 0), 100);
+		rgb = collection.hslToRgb(hsl.h, hsl.s, hsl.l);
+
+		return Color.fromString("rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + color.a + ")");
+	}
+
 	]]>
 </Script>
 
@@ -115,7 +229,7 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 				+ "L 0," + tl + " a " + tl + "," + tl + " 0 0,1 " + tl + "," + -tl + "Z"
 			</D>
 			<Fill>$fillColor</Fill>
-			<StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
+			<StrokeColor>$smartColor.value ? collection.darken($fillColor, 5) : $strokeColor</StrokeColor>
 			<StrokeStyle>$strokeStyle</StrokeStyle>
 		</For>
 		<For ref="text">
@@ -136,7 +250,7 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 		<For ref="split">
 			<Visibility>$dropdown.value == "split"</Visibility>
 			<D>"M" + ($box.w - 26) + ",0 l 0," + $box.h</D>
-			<StrokeColor>$smartColor.value ? collection.darken($fillColor, 0.1) : $strokeColor</StrokeColor>
+			<StrokeColor>$smartColor.value ? collection.darken($fillColor, 5) : $strokeColor</StrokeColor>
 			<StrokeStyle>$strokeStyle</StrokeStyle>
 		</For>
 	</Behaviors>
@@ -362,7 +476,7 @@ MenuItem]]></Property>
 		</For>
 
 		<For ref="stop1">
-			<StopColor>collection.darken($fillColor, 0.02)</StopColor>
+			<StopColor>collection.darken($fillColor, 5)</StopColor>
 		</For>
 
 		<For ref="stop2">
@@ -612,23 +726,24 @@ MenuItem]]></Property>
 	<PropertyValue name="fillColor">#ffffff00</PropertyValue>
 </Shortcut>
 
-<Shape id="Alert" displayName="Alert" icon="Icons/Alert.png">
+<Shape id="Alert" displayName="Alert (success)" icon="Icons/Alert.png">
 	<Properties>
 		<PropertyGroup>
 			<Property name="box" type="Dimension">1024,52</Property>
 			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
+			<Property name="smartColor" displayName="Automatic text and border color" type="Bool">true</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Text">
 			<Property name="textContent" displayName="Text Content" type="RichText"><![CDATA[<b>Well done!</b> You successfully read this important alert message.]]></Property>
 			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
-			<Property name="textColor" displayName="Text Color" type="Color">#3c763d</Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
 			<Property name="textAlign" displayName="Text Alignment" type="Alignment">0,1</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Background">
 			<Property name="fillColor" displayName="Color" type="Color">#dff0d8</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Border">
-			<Property name="strokeColor" displayName="Border Color" type="Color">#D6E9C6</Property>
+			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
 			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
 		</PropertyGroup>
 	</Properties>
@@ -640,13 +755,13 @@ MenuItem]]></Property>
 				<Arg>$radius.x</Arg>
 			</Radius>
 			<Fill>$fillColor</Fill>
-			<StrokeColor>$strokeColor</StrokeColor>
+			<StrokeColor>$smartColor.value ? collection.darken(collection.spin($fillColor, -10), 5) : $strokeColor</StrokeColor>
 			<StrokeStyle>$strokeStyle</StrokeStyle>
 		</For>
 		<For ref="text">
 			<Box>$box</Box>
 			<Font>$textFont</Font>
-			<Color>$textColor</Color>
+			<Color>$smartColor.value ? collection.darken($fillColor, 60) : $textColor</Color>
 			<TextContent>$textContent</TextContent>
 			<BoxFit>
 				<Arg>Bound.fromBox($box, 15)</Arg>
@@ -665,6 +780,20 @@ MenuItem]]></Property>
 	</p:Content>
 </Shape>
 
+<Shortcut displayName="Alert (info)" icon="Icons/AlertInfo.png" to="Alert">
+	<PropertyValue name="fillColor">#d9edf7ff</PropertyValue>
+	<PropertyValue name="textContent"><![CDATA[<b>Heads up!</b> This alert needs your attention, but it's not super important. ]]></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Alert (warning)" icon="Icons/AlertWarning.png" to="Alert">
+	<PropertyValue name="fillColor">#fcf8e3</PropertyValue>
+	<PropertyValue name="textContent"><![CDATA[<b>Warning!</b> Best check yo self, you're not looking too good. ]]></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Alert (danger)" icon="Icons/AlertDanger.png" to="Alert">
+	<PropertyValue name="fillColor">#f2dede</PropertyValue>
+	<PropertyValue name="textContent"><![CDATA[<b>Oh snap!</b> Change a few things up and try submitting again. ]]></PropertyValue>
+</Shortcut>
 
 <Shape id="ProgressBar" displayName="Progress Bar" icon="Icons/ProgressBar.png">
 	<Properties>
