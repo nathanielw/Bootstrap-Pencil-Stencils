@@ -761,7 +761,7 @@ MenuItem]]></Property>
 		<For ref="text">
 			<Box>$box</Box>
 			<Font>$textFont</Font>
-			<Color>$smartColor.value ? collection.darken($fillColor, 60) : $textColor</Color>
+			<Color>$smartColor.value ? collection.darken($fillColor, 56) : $textColor</Color>
 			<TextContent>$textContent</TextContent>
 			<BoxFit>
 				<Arg>Bound.fromBox($box, 15)</Arg>
@@ -794,6 +794,79 @@ MenuItem]]></Property>
 	<PropertyValue name="fillColor">#f2dede</PropertyValue>
 	<PropertyValue name="textContent"><![CDATA[<b>Oh snap!</b> Change a few things up and try submitting again. ]]></PropertyValue>
 </Shortcut>
+
+
+<Shape id="Panel" displayName="Panel (Primary)" icon="Icons/Panel.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">1024,91</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="Math.min($height.y, $box.h/2)" p:noScale="true">4,0</Property>
+			<Property name="height" displayName="Header Height" type="Handle" p:lockX="true" p:maxY="$box.h - $radius.x" p:noScale="true">0,39</Property>
+			<Property name="smartColor" displayName="Automatic text and border color" type="Bool">false</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Panel title]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font">"Helvetica Neue", Helvetica, Arial, sans-serif|500|normal|16px</Property>
+			<Property name="textColor" displayName="Text Color" type="Color">#ffffffff</Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">0,1</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Header Background" type="Color"><E>$$brandPrimary</E></Property>
+			<Property name="paneColor" displayName="Pane Background" type="Color"><E>$$neutral</E></Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$brandPrimary</E></Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="bg">
+			<D>
+				var tl, tr, br, bl; // Radius of each corner
+				tl = tr = $radius.x;
+				bl = br = 0;
+
+				"M " + tl + ",0 L " + ($box.w - tr) + ",0 a " + tr + "," + tr + " 0 0,1 " + tr + "," + tr
+				+ "l 0," + ($height.y - tr - br) + " a " + br + "," + br + " 0 0,1 " + -br + "," + br
+				+ "L " + bl + "," + $height.y + " a " + bl + "," + bl + " 0 0,1 " + -bl + "," + -bl
+				+ "L 0," + tl + " a " + tl + "," + tl + " 0 0,1 " + tl + "," + -tl + "Z"
+			</D>
+			<Fill>$fillColor</Fill>
+			<StrokeColor>$smartColor.value ? collection.darken(collection.spin($fillColor, -10), 5) : $strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+		<For ref="pane">
+			<D>
+				var tl, tr, br, bl; // Radius of each corner
+				tl = tr = 0;
+				bl = br = $radius.x;
+
+				"M " + tl + "," + $height.y + " L " + ($box.w - tr) + "," + $height.y + " a " + tr + "," + tr + " 0 0,1 " + tr + "," + tr
+				+ "L" + $box.w + "," + ($box.h - tr - br) + " a " + br + "," + br + " 0 0,1 " + -br + "," + br
+				+ "L " + bl + "," + $box.h + " a " + bl + "," + bl + " 0 0,1 " + -bl + "," + -bl
+				+ "L 0," + ($height.y + tl) + " a " + tl + "," + tl + " 0 0,1 " + tl + "," + -tl + "Z"
+			</D>
+			<Fill>$paneColor</Fill>
+			<StrokeColor>$smartColor.value ? collection.darken(collection.spin($fillColor, -10), 5) : $strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+		<For ref="text">
+			<Font>$textFont</Font>
+			<Color>$smartColor.value ? collection.darken($fillColor, 56) : $textColor</Color>
+			<PlainTextContent>
+				<Arg>$textContent</Arg>
+				<Arg>Bound.fromBox(new Dimension($box.w, $height.y), 15, 10)</Arg>
+				<Arg>$textAlign</Arg>
+			</PlainTextContent>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"	xmlns="http://www.w3.org/2000/svg">
+		<path id="bg" />
+		<path id="pane" />
+		<text id="text"/>
+	</p:Content>
+</Shape>
 
 <Shape id="ProgressBar" displayName="Progress Bar" icon="Icons/ProgressBar.png">
 	<Properties>
