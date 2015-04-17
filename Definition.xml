@@ -165,6 +165,62 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 
 	]]>
 </Script>
+<Shape id="Navbar" displayName="Navbar" icon="Icons/Navbar.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">1024,50</Property>
+			<Property name="smartColor" displayName="Automatic border color" type="Bool">true</Property>
+			<Property name="fullWidth" displayName="Full-width" type="Bool">false</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Color" type="Color">#e7e7e7ff</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="bg">
+			<Box>$box</Box>
+			<Radius>
+				<Arg>$radius.x</Arg>
+				<Arg>$radius.x</Arg>
+			</Radius>
+			<Fill>$fillColor</Fill>
+			<StrokeColor>$smartColor.value ? collection.darken($fillColor, 8) : $strokeColor</StrokeColor>
+			<StrokeStyle>$fullWidth.value ? StrokeStyle.fromString("0|") : $strokeStyle</StrokeStyle>
+		</For>
+		<For ref="borderBottom">
+			<Visibility>$fullWidth.value</Visibility>
+			<D>[M($radius.x, $box.h), L($box.w - $radius.x, $box.h)]</D>
+			<StrokeColor>$smartColor.value ? collection.darken($fillColor, 8) : $strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+									xmlns="http://www.w3.org/2000/svg">
+		<rect id="bg" />
+		<path id="borderBottom" />
+	</p:Content>
+</Shape>
+
+<Shortcut displayName="Navbar (full-width)" icon="Icons/NavbarFull.png" to="Navbar">
+	<PropertyValue name="radius">0,0</PropertyValue>
+	<PropertyValue name="fullWidth">true</PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Navbar (inverse)" icon="Icons/NavbarInverse.png" to="Navbar">
+	<PropertyValue name="fillColor"><E>$$grayDarker</E></PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Navbar (full-width, inverse)" icon="Icons/NavbarInverse.png" to="Navbar">
+	<PropertyValue name="fillColor"><E>$$grayDarker</E></PropertyValue>
+	<PropertyValue name="radius">0,0</PropertyValue>
+	<PropertyValue name="fullWidth">true</PropertyValue>
+</Shortcut>
 
 <Shape id="Button" displayName="Button" icon="Icons/Button.png">
 	<Properties>
@@ -867,6 +923,26 @@ MenuItem]]></Property>
 		<text id="text"/>
 	</p:Content>
 </Shape>
+
+<Shortcut displayName="Panel (success)" icon="Icons/PanelSuccess.png" to="Panel">
+	<PropertyValue name="fillColor">#dff0d8ff</PropertyValue>
+	<PropertyValue name="smartColor">true</PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Panel (info)" icon="Icons/PanelInfo.png" to="Panel">
+	<PropertyValue name="fillColor">#d9edf7ff</PropertyValue>
+	<PropertyValue name="smartColor">true</PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Panel (warning)" icon="Icons/PanelWarning.png" to="Panel">
+	<PropertyValue name="fillColor">#fcf8e3</PropertyValue>
+	<PropertyValue name="smartColor">true</PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Panel (danger)" icon="Icons/PanelDanger.png" to="Panel">
+	<PropertyValue name="fillColor">#f2dede</PropertyValue>
+	<PropertyValue name="smartColor">true</PropertyValue>
+</Shortcut>
 
 <Shape id="ProgressBar" displayName="Progress Bar" icon="Icons/ProgressBar.png">
 	<Properties>
