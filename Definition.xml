@@ -294,7 +294,17 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 			<Color>$textColor</Color>
 			<PlainTextContent>
 				<Arg>$textContent</Arg>
-				<Arg>Bound.fromBox($box, 6, 12)</Arg>
+				<Arg>
+					var width = $box.w;
+
+					switch ($dropdown.value) {
+						case "split":
+						width = $box.w - 26; break;
+						case "dropdown":
+						width = $box.w - 12; break;
+					}
+
+					Bound.fromBox(new Dimension(width, $box.h), 12, 6)</Arg>
 				<Arg>$textAlign</Arg>
 			</PlainTextContent>
 		</For>
@@ -664,8 +674,8 @@ MenuItem]]></Property>
 			<Property name="selected" displayName="Selected" type="Bool">true</Property>
 			<Property name="dropdown" displayName="Dropdown" type="Bool">false</Property>
 			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h" p:noScale="true">4,0</Property>
-			<Property name="leftLine" displayName="Left Underline" type="Handle" p:lockY="true" p:disabled="!$selected.value">-50,42</Property>
-			<Property name="rightLine" displayName="Right Underline" type="Handle" p:lockY="true" p:disabled="!$selected.value">148,42</Property>
+			<Property name="leftLine" displayName="Left Underline" type="Handle" p:lockY="true" p:maxX="0" p:disabled="!$selected.value">-50,42</Property>
+			<Property name="rightLine" displayName="Right Underline" type="Handle" p:lockY="true" p:minX="$box.w" p:disabled="!$selected.value">148,42</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Text">
 			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Tab]]></Property>
@@ -703,7 +713,14 @@ MenuItem]]></Property>
 			<Color>$textColor</Color>
 			<PlainTextContent>
 				<Arg>$textContent</Arg>
-				<Arg>Bound.fromBox($box, 15, 10)</Arg>
+				<Arg>
+					var width = $box.w;
+
+					if ($dropdown.value) {
+						width = $box.w - 14;
+					}
+
+					Bound.fromBox(new Dimension(width, $box.h), 15, 10)</Arg>
 				<Arg>$textAlign</Arg>
 			</PlainTextContent>
 		</For>
