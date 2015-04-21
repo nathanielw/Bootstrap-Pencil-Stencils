@@ -174,7 +174,7 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Background">
-			<Property name="fillColor" displayName="Color" type="Color">#e7e7e7ff</Property>
+			<Property name="fillColor" displayName="Color" type="Color">#f8f8f8ff</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Border">
 			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
@@ -299,9 +299,9 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 
 					switch ($dropdown.value) {
 						case "split":
-						width = $box.w - 26; break;
+							width = $box.w - 26; break;
 						case "dropdown":
-						width = $box.w - 12; break;
+							width = $box.w - 12; break;
 					}
 
 					Bound.fromBox(new Dimension(width, $box.h), 12, 6)</Arg>
@@ -714,12 +714,7 @@ MenuItem]]></Property>
 			<PlainTextContent>
 				<Arg>$textContent</Arg>
 				<Arg>
-					var width = $box.w;
-
-					if ($dropdown.value) {
-						width = $box.w - 14;
-					}
-
+					var width = $dropdown.value? $box.w - 14 : $box.w;
 					Bound.fromBox(new Dimension(width, $box.h), 15, 10)</Arg>
 				<Arg>$textAlign</Arg>
 			</PlainTextContent>
@@ -749,6 +744,7 @@ MenuItem]]></Property>
 		<PropertyGroup>
 			<Property name="box" type="Dimension">67,40</Property>
 			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
+			<Property name="dropdown" displayName="Dropdown" type="Bool">false</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Text">
 			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Label]]></Property>
@@ -781,9 +777,16 @@ MenuItem]]></Property>
 			<Color>$textColor</Color>
 			<PlainTextContent>
 				<Arg>$textContent</Arg>
-				<Arg>Bound.fromBox($box, 15, 10)</Arg>
+				<Arg>
+					var width = $dropdown.value? $box.w - 14 : $box.w;
+					Bound.fromBox(new Dimension(width, $box.h), 15, 10)</Arg>
 				<Arg>$textAlign</Arg>
 			</PlainTextContent>
+		</For>
+		<For ref="arrow">
+			<Visibility>$dropdown.value</Visibility>
+			<D>"M " + ($box.w - 20) + "," + (($box.h / 2) - 2) + " l 8,0 l -4,4 Z"</D>
+			<Fill>$textColor</Fill>
 		</For>
 	</Behaviors>
 
@@ -791,12 +794,41 @@ MenuItem]]></Property>
 									xmlns="http://www.w3.org/2000/svg">
 		<rect id="bg" />
 		<text id="text"/>
+		<path id="arrow" style="opacity:1;fill:#000000;fill-opacity:1;stroke:none" />
 	</p:Content>
 </Shape>
 
 <Shortcut displayName="Pill Tab (Unselected)" icon="Icons/PillTabUnselected.png" to="PillTab">
 	<PropertyValue name="textColor"><E>$$brandPrimary</E></PropertyValue>
 	<PropertyValue name="fillColor">#ffffff00</PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Nav Item (selected)" icon="Icons/NavItemSelected.png" to="PillTab">
+	<PropertyValue name="textColor"><E>$$gray</E></PropertyValue>
+	<PropertyValue name="fillColor">#e7e7e7ff</PropertyValue>
+	<PropertyValue name="radius">0,0</PropertyValue>
+	<PropertyValue name="box">67,50</PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Nav Item (selected, inverse)" icon="Icons/NavItemSelected.png" to="PillTab">
+	<PropertyValue name="textColor"><E>$$neutral</E></PropertyValue>
+	<PropertyValue name="fillColor"><E>$$grayDark</E></PropertyValue>
+	<PropertyValue name="radius">0,0</PropertyValue>
+	<PropertyValue name="box">67,50</PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Nav Item (unselected)" icon="Icons/NavItemUnselected.png" to="PillTab">
+	<PropertyValue name="textColor"><E>$$gray</E></PropertyValue>
+	<PropertyValue name="fillColor">#e7e7e700</PropertyValue>
+	<PropertyValue name="radius">0,0</PropertyValue>
+	<PropertyValue name="box">67,50</PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Nav Item (unselected, inverse)" icon="Icons/NavItemUnselected.png" to="PillTab">
+	<PropertyValue name="textColor"><E>$$neutral</E></PropertyValue>
+	<PropertyValue name="fillColor">transparent</PropertyValue>
+	<PropertyValue name="radius">0,0</PropertyValue>
+	<PropertyValue name="box">67,50</PropertyValue>
 </Shortcut>
 
 <Shape id="Alert" displayName="Alert (success)" icon="Icons/Alert.png">
