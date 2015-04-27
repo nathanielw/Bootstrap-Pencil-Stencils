@@ -837,6 +837,7 @@ MenuItem]]></Property>
 			<Property name="box" type="Dimension">1024,52</Property>
 			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
 			<Property name="smartColor" displayName="Automatic text and border color" type="Bool">true</Property>
+			<Property name="dismissible" displayName="Dismissible" type="Bool">false</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Text">
 			<Property name="textContent" displayName="Text Content" type="RichText"><![CDATA[<b>Well done!</b> You successfully read this important alert message.]]></Property>
@@ -873,11 +874,18 @@ MenuItem]]></Property>
 				<Arg>$textAlign</Arg>
 			</BoxFit>
 		</For>
+		<For ref="close">
+			<Visibility>$dismissible.value</Visibility>
+			<Fill>($smartColor.value ? collection.darken($fillColor, 56) : $textColor).hollowed(0.8)</Fill>
+			<Transform>[translate($box.w - 25, ($box.h - 10) / 2)]</Transform> <!-- x = Box width - 15px padding - 10px (width of x), y = (Box height - x height) / 2 -->
+		</For>
 	</Behaviors>
 
 	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"
 									xmlns="http://www.w3.org/2000/svg">
 		<rect id="bg" />
+		<path id= "close" d="M 1.4666233,0 0,1.4769581 3.5260678,5 0,8.523042 1.4666233,10 5,6.4712586 8.5317525,10 10,8.523042 6.4723077,5 10,1.4769581 8.5317525,0 5,3.5287411 1.4666233,0 Z" />
+
 		<foreignObject x="0" y="0" width="200" height="150" id="text">
 				<div xmlns="http://www.w3.org/1999/xhtml">
 				</div>
