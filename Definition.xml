@@ -358,7 +358,7 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 <Shape id="dropdown" displayName="Dropdown" icon="Icons/Dropdown.png">
 	<Properties>
 		<PropertyGroup>
-			<Property name="box" type="Dimension">172,90</Property>
+			<Property name="box" type="Dimension">172,132</Property>
 			<Property name="shadow" displayName="Shadow" type="Bool">true</Property>
 		</PropertyGroup>
 
@@ -371,9 +371,11 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Text">
-			<Property name="contentText" displayName="Text Content" type="PlainText" p:editInfo="({targetName: 'content', bound: Bound.fromBox($box, 0, 5), font: $textFont, align: new Alignment(0, 0), multi: true})"><![CDATA[MenuItem*
-MenuItem
-MenuItem]]></Property>
+			<Property name="contentText" displayName="Text Content" type="PlainText" p:editInfo="({targetName: 'content', bound: Bound.fromBox($box, 0, 5), font: $textFont, align: new Alignment(0, 0), multi: true})"><![CDATA[#Dropdown header
+Selected Item*
+Another Item
+--
+_Disabled Item]]></Property>
 			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
 			<Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
 			<Property name="textAlign" displayName="Text Alignment" type="Alignment">1,1</Property>
@@ -408,11 +410,28 @@ MenuItem]]></Property>
 				for (var i = 0; i < items.length; i++) {
 					var text = items[i];
 
-					var css = CSS.fromString("padding: 4px 20px;");
+					var css = new CSS();
 
-					if (text.match(/(.*)\*$/)) {
-						text = RegExp.$1;
-						css.set("background", $selectedColor.toRGBString());
+					if (text.match(/^--+$/)) {	// Divider line
+						text = "";
+						css.set("background", $strokeColor.toRGBAString());
+						css.set("height", "1px");
+						css.set("margin", "9px 0");
+					} else {
+						css.set("padding", "4px 20px");
+						css.set("font", $textFont.toCSSFontString());
+
+						if (text.match(/^_(.*)/)) {	// Disabled item
+							text = RegExp.$1;
+							css.set("color", collection.lighten($textColor, 28).toRGBString());
+						} else if (text.match(/^#(.*)/)) {	// Header item
+							text = RegExp.$1;
+							css.set("color", collection.lighten($textColor, 28).toRGBString());
+							css.set("font-size", ($textFont.getPixelHeight() * 0.86) + "px");
+						} else if (text.match(/(.*)\*$/)) {	// Selected item
+							text = RegExp.$1;
+							css.set("background", $selectedColor.toRGBString());
+						}
 					}
 
 					specs.push({
@@ -427,7 +446,6 @@ MenuItem]]></Property>
 				]]>
 			</DomContent>
 
-			<Font>$textFont</Font>
 			<Color>$textColor</Color>
 		</For>
 	</Behaviors>
