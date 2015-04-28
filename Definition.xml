@@ -1017,6 +1017,95 @@ MenuItem]]></Property>
 	<PropertyValue name="smartColor">true</PropertyValue>
 </Shortcut>
 
+<Shape id="Well" displayName="Well" icon="Icons/Well.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">1024,60</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
+			<Property name="padding" displayName="Padding" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:minY="$box.h" p:maxY="$box.h" p:noScale="true">19,0</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="RichText"><![CDATA[Look, I'm in a well!]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">0,1</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Color" type="Color">#f5f5f5ff</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color">#e3e3e3ff</Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="bg">
+			<Box>$box</Box>
+			<Radius>$radius.x</Radius>
+			<StrokeColor>$strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+
+		<For ref="text">
+			<Font>$textFont</Font>
+			<Fill>$textColor</Fill>
+			<Color>$textColor</Color>
+			<TextContent>$textContent</TextContent>
+			<BoxFit>
+				<Arg>Bound.fromBox($box, $padding.x)</Arg>
+				<Arg>$textAlign</Arg>
+			</BoxFit>
+		</For>
+
+		<For ref="stop1">
+			<StopColor>collection.darken($fillColor, 5)</StopColor>
+		</For>
+
+		<For ref="stop2">
+			<StopColor>$fillColor</StopColor>
+			<Offset>3.4 / $box.h</Offset>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns="http://www.w3.org/2000/svg">
+		<defs>
+			<linearGradient
+				id="shadowFill"
+				x1="0%"
+				y1="0%"
+				x2="0%"
+				y2="100%" >
+
+				<stop
+					id="stop1"
+					offset="0"
+					style="stop-color:#FFFFFF;stop-opacity:1" />
+				<stop
+					id="stop2"
+					offset="1"
+					style="stop-color:#FFFFFF;stop-opacity:1" />
+			</linearGradient>
+		</defs>
+		<rect id="bg" style="fill: url(#shadowFill)" />
+		<foreignObject x="0" y="0" width="200" height="150" id="text">
+				<div xmlns="http://www.w3.org/1999/xhtml">
+				</div>
+		</foreignObject>
+	</p:Content>
+</Shape>
+
+<Shortcut displayName="Well (large)" icon="Icons/WellLarge.png" to="Well">
+	<PropertyValue name="box">1024,71</PropertyValue>
+	<PropertyValue name="padding">24,0</PropertyValue>
+	<PropertyValue name="radius">6,0</PropertyValue>
+</Shortcut>
+
+<Shortcut displayName="Well (small)" icon="Icons/WellSmall.png" to="Well">
+	<PropertyValue name="box">1024,40</PropertyValue>
+	<PropertyValue name="padding">9,0</PropertyValue>
+	<PropertyValue name="radius">3,0</PropertyValue>
+</Shortcut>
+
 <Shape id="ProgressBar" displayName="Progress Bar" icon="Icons/ProgressBar.png">
 	<Properties>
 		<PropertyGroup>
