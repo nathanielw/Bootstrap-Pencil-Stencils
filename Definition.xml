@@ -1024,6 +1024,12 @@ MenuItem]]></Property>
 			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
 			<Property name="progress" displayName="Progress" type="Handle" p:lockY="true" p:minX="0" p:minY="$box.h" p:maxX="$box.w">300,0</Property>
 		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font">"Helvetica Neue", Helvetica, Arial, sans-serif|400|normal|12px</Property>
+			<Property name="textColor" displayName="Text Color" type="Color">#ffffffff</Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">1,1</Property>
+		</PropertyGroup>
 		<PropertyGroup name="Background">
 			<Property name="bgFillColor" displayName="Color" type="Color">#f5f5f5ff</Property>
 		</PropertyGroup>
@@ -1054,6 +1060,16 @@ MenuItem]]></Property>
 
 		<For ref="stripes">
 			<Visibility>$striped.value</Visibility>
+		</For>
+
+		<For ref="text">
+			<Font>$textFont</Font>
+			<Color>$textColor</Color>
+			<PlainTextContent>
+				<Arg>$textContent</Arg>
+				<Arg>new Bound(0, 0, $progress.x, $box.h)</Arg>
+				<Arg>$textAlign</Arg>
+			</PlainTextContent>
 		</For>
 	</Behaviors>
 
@@ -1095,6 +1111,7 @@ MenuItem]]></Property>
 		<use xlink:href="#area" id="bg" style="filter:url(#innerShadow)" />
 		<use xlink:href="#area" id="fg" style="clip-path: url(#progressClip);" />
 		<use xlink:href="#area" id="stripes" style="clip-path: url(#progressClip); fill: url(#stripes);" />
+		<text id="text"/>
 	</p:Content>
 </Shape>
 
