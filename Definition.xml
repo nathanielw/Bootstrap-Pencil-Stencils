@@ -1067,6 +1067,22 @@ MenuItem]]></Property>
 		</For>
 	</Behaviors>
 
+	<Actions>
+		<Action id="getSnappingGuide">
+			<Impl>
+				var b = this.getBounding();
+				var padding = this.getProperty("padding").x;
+
+				return [
+					new SnappingData("InnerLeft", b.x + padding, "Left", true, this.id),
+					new SnappingData("InnerRight", b.x + b.width - padding, "Right", true, this.id),
+					new SnappingData("InnerTop", b.y + padding, "Top", false, this.id),
+					new SnappingData("InnerBottom", b.y + b.height - padding, "Bottom", false, this.id)
+				];
+			</Impl>
+		</Action>
+	</Actions>
+
 	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns="http://www.w3.org/2000/svg">
 		<defs>
 			<linearGradient
