@@ -245,6 +245,8 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 		<PropertyGroup name="Style">
 			<Property name="dropdown" displayName="Dropdown type" type="Enum"
 				p:enumValues="['none|None', 'dropdown|Dropdown', 'split|Split dropdown']">none</Property>
+			<Property name="dropdownDirection" displayName="Dropdown direction" type="Enum"
+				p:enumValues="['1|Down', '-1|Up']">1</Property>
 			<Property name="position" displayName="Group position" type="Enum"
 				p:enumValues="['none|None', 'left|Left', 'right|Right', 'middle|Middle', 'top|Top', 'bottom|Bottom']">none</Property>
 		</PropertyGroup>
@@ -310,7 +312,7 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 		</For>
 		<For ref="arrow">
 			<Visibility>$dropdown.value != "none"</Visibility>
-			<D>"M " + ($box.w - ($dropdown.value == "split" ? 17 : 20)) + "," + (($box.h / 2) - 2) + " l 8,0 l -4,4 Z"</D>
+			<D>"M " + ($box.w - ($dropdown.value == "split" ? 17 : 20)) + "," + (($box.h / 2) + ($dropdownDirection.value * -2)) + " l 8,0 l -4," + ($dropdownDirection.value * 4) + " Z"</D>
 			<Fill>$textColor</Fill>
 		</For>
 		<For ref="split">
@@ -694,6 +696,8 @@ _Disabled Item]]></Property>
 			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h" p:noScale="true">4,0</Property>
 			<Property name="leftLine" displayName="Left Underline" type="Handle" p:lockY="true" p:maxX="0" p:disabled="!$selected.value">-50,42</Property>
 			<Property name="rightLine" displayName="Right Underline" type="Handle" p:lockY="true" p:minX="$box.w" p:disabled="!$selected.value">148,42</Property>
+			<Property name="dropdownDirection" displayName="Dropdown direction" type="Enum"
+				p:enumValues="['1|Down', '-1|Up']">1</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Text">
 			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Tab]]></Property>
@@ -739,7 +743,7 @@ _Disabled Item]]></Property>
 		</For>
 		<For ref="arrow">
 			<Visibility>$dropdown.value</Visibility>
-			<D>"M " + ($box.w - 20) + "," + (($box.h / 2) - 2) + " l 8,0 l -4,4 Z"</D>
+			<D>"M " + ($box.w - 20) + "," + (($box.h / 2) + ($dropdownDirection.value * -2)) + " l 8,0 l -4," + ($dropdownDirection.value * 4) + " Z"</D>
 			<Fill>$textColor</Fill>
 		</For>
 	</Behaviors>
@@ -763,6 +767,8 @@ _Disabled Item]]></Property>
 			<Property name="box" type="Dimension">67,40</Property>
 			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
 			<Property name="dropdown" displayName="Dropdown" type="Bool">false</Property>
+			<Property name="dropdownDirection" displayName="Dropdown direction" type="Enum"
+				p:enumValues="['1|Down', '-1|Up']">1</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Text">
 			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Label]]></Property>
@@ -803,7 +809,7 @@ _Disabled Item]]></Property>
 		</For>
 		<For ref="arrow">
 			<Visibility>$dropdown.value</Visibility>
-			<D>"M " + ($box.w - 20) + "," + (($box.h / 2) - 2) + " l 8,0 l -4,4 Z"</D>
+			<D>"M " + ($box.w - 20) + "," + (($box.h / 2) + ($dropdownDirection.value * -2)) + " l 8,0 l -4," + ($dropdownDirection.value * 4) + " Z"</D>
 			<Fill>$textColor</Fill>
 		</For>
 	</Behaviors>
