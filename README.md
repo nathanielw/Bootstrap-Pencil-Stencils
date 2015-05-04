@@ -10,5 +10,8 @@ See [#1](/../../issues/1) for a full list of included components - requests & co
 2. Create a .zip of everything **inside** the cloned/extracted folder (not the folder itself)
 3. In Pencil, install the .zip via _Tools_ > _Install new collection..._
 
+### Updating
+Right-click on the collection in Pencil's sidebar and choose _Uninstall this collection_ before repeating the installation steps.
+
 ## Notes
 A lot of the elements provide variations which can be accessed by right-clicking on the element once it's on the canvas.
