@@ -1209,7 +1209,7 @@ _Disabled Item]]></Property>
 
 			<clipPath id="progressClip">
 				<rect id="clipRect" />
-      		</clipPath>
+	  		</clipPath>
 
 			<filter id="innerShadow">
 				<feFlood
@@ -1314,4 +1314,106 @@ _Disabled Item]]></Property>
 	<PropertyValue name="box">80,32</PropertyValue>
 	<PropertyValue name="textContent"><![CDATA[Next →]]></PropertyValue>
 </Shortcut>
+
+
+<Shape id="Breadcrumbs" displayName="Breadcrumbs" icon="Icons/Breadcrumbs.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">800,36</Property>
+			<Property name="radius" displayName="Corner Radius" type="Handle" p:lockY="true" p:minX="0" p:maxX="$box.h / 2" p:noScale="true">4,0</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="PlainText" p:editInfo="({targetName: 'text', bound: Bound.fromBox($box, 15, 8), font: $textFont, align: new Alignment(0, 1), multi: false})"><![CDATA[Home / Library / Data]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
+			<Property name="linkColor" displayName="Link Color" type="Color"><E>$$brandPrimary</E></Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$grayLight</E></Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">0,1</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Color" type="Color">#f5f5f5ff</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">0|</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="bg">
+			<Box>$box</Box>
+			<Radius>
+				<Arg>$radius.x</Arg>
+				<Arg>$radius.x</Arg>
+			</Radius>
+			<Fill>$fillColor</Fill>
+			<StrokeColor>$strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+
+		<For ref="text">
+			<Font>$textFont</Font>
+			<DomContent><![CDATA[
+				var items = $textContent.value.split(/ +\/ +/);
+				var specs = [];
+
+				var css = new CSS();
+				css.set("font-size",$textFont.size);
+				css.set("font-family",$textFont.family);
+				css.set("font-style",$textFont.style);
+				css.set("font-weight",$textFont.weight);
+				css.set("font-decor",$textFont.decor);
+
+				var dividerCss = CSS.fromString(css.toString());
+				dividerCss.set("fill", collection.lighten($textColor, 30).toRGBString());
+
+				for (var i = 0; i < items.length; i++) {
+					var css = new CSS();
+
+					var crumb = items[i];
+
+					if(crumb.match(/\S/) != null) {
+						var color = $linkColor;
+
+						if (i == items.length - 1) {
+							color = $textColor;
+						}
+
+						css.set("fill", color.toRGBString());
+
+						specs.push({
+							_name: "tspan",
+							_uri: "http://www.w3.org/2000/svg",
+							_text : crumb,
+							dx: (i == 0 ? 0 : 5),
+							style: css
+						});
+
+						// slash dividers
+						if (i != items.length - 1) {
+							specs.push({
+								_name: "tspan",
+								_uri: "http://www.w3.org/2000/svg",
+								_text : " / ",
+								dx: 5,
+								style: dividerCss
+							});
+						}
+					}
+				}
+				Dom.newDOMFragment(specs);
+				]]>
+			</DomContent>
+
+			<BoxFit>
+				<Arg>Bound.fromBox($box, 15, 8)</Arg>
+				<Arg>$textAlign</Arg>
+			</BoxFit>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+		xmlns="http://www.w3.org/2000/svg">
+		<rect id="bg" />
+		<text id="text"/>
+	</p:Content>
+</Shape>
 </Shapes>
