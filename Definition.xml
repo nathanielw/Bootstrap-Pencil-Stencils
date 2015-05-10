@@ -216,7 +216,7 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 	<PropertyValue name="fillColor"><E>$$grayDarker</E></PropertyValue>
 </Shortcut>
 
-<Shortcut displayName="Navbar (full-width, inverse)" icon="Icons/NavbarInverse.png" to="Navbar">
+<Shortcut displayName="Navbar (full-width, inverse)" icon="Icons/NavbarFullInverse.png" to="Navbar">
 	<PropertyValue name="fillColor"><E>$$grayDarker</E></PropertyValue>
 	<PropertyValue name="radius">0,0</PropertyValue>
 	<PropertyValue name="fullWidth">true</PropertyValue>
@@ -490,7 +490,7 @@ _Disabled Item]]></Property>
 	</p:Content>
 </Shape>
 
-<Shape id="textInput" displayName="Text Input" icon="Icons/textInput.png">
+<Shape id="textInput" displayName="Text Input" icon="Icons/TextInput.png">
 	<Properties>
 		<PropertyGroup>
 			<Property name="box" type="Dimension">100,34</Property>
@@ -834,7 +834,7 @@ _Disabled Item]]></Property>
 	<PropertyValue name="box">67,50</PropertyValue>
 </Shortcut>
 
-<Shortcut displayName="Nav Item (selected, inverse)" icon="Icons/NavItemSelected.png" to="PillTab">
+<Shortcut displayName="Nav Item (selected, inverse)" icon="Icons/NavItemSelectedInverse.png" to="PillTab">
 	<PropertyValue name="textColor"><E>$$neutral</E></PropertyValue>
 	<PropertyValue name="fillColor"><E>$$grayDark</E></PropertyValue>
 	<PropertyValue name="radius">0,0</PropertyValue>
@@ -848,14 +848,14 @@ _Disabled Item]]></Property>
 	<PropertyValue name="box">67,50</PropertyValue>
 </Shortcut>
 
-<Shortcut displayName="Nav Item (unselected, inverse)" icon="Icons/NavItemUnselected.png" to="PillTab">
+<Shortcut displayName="Nav Item (unselected, inverse)" icon="Icons/NavItemUnselectedInverse.png" to="PillTab">
 	<PropertyValue name="textColor"><E>$$neutral</E></PropertyValue>
 	<PropertyValue name="fillColor">transparent</PropertyValue>
 	<PropertyValue name="radius">0,0</PropertyValue>
 	<PropertyValue name="box">67,50</PropertyValue>
 </Shortcut>
 
-<Shape id="Alert" displayName="Alert (success)" icon="Icons/Alert.png">
+<Shape id="Alert" displayName="Alert (success)" icon="Icons/AlertSuccess.png">
 	<Properties>
 		<PropertyGroup>
 			<Property name="box" type="Dimension">1024,52</Property>
