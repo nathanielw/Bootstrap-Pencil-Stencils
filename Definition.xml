@@ -163,6 +163,32 @@ url="https://github.com/nathanielw/Bootstrap-Pencil-Stencils">
 		return Color.fromString("rgba(" + rgb.r + "," + rgb.g + "," + rgb.b + "," + color.a + ")");
 	}
 
+	collection.setCssTextAlignment = function(css, h, v) {
+		switch (parseInt(h, 10)) {
+			case 0:
+				css.set("text-align", "left");
+				break;
+			case 1:
+				css.set("text-align", "center");
+				break;
+			case 2:
+				css.set("text-align", "right");
+				break;
+		}
+
+		switch (parseInt(v, 10)) {
+			case 0:
+				css.set("vertical-align", "top");
+				break;
+			case 1:
+				css.set("vertical-align", "middle");
+				break;
+			case 2:
+				css.set("vertical-align", "bottom");
+				break;
+		}
+	}
+
 	]]>
 </Script>
 <Shape id="Navbar" displayName="Navbar" icon="Icons/Navbar.png">
@@ -1040,6 +1066,140 @@ _Disabled Item]]></Property>
 	<PropertyValue name="fillColor">#f2dede</PropertyValue>
 	<PropertyValue name="smartColor">true</PropertyValue>
 </Shortcut>
+
+<Shape id="table" displayName="Table" icon="Icons/Table.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">500,135</Property>
+			<Property name="condensed" displayName="Condensed" type="Bool">false</Property>
+		</PropertyGroup>
+
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Background Color" type="Color">#ffffff00</Property>
+			<Property name="stripeColor" displayName="Stripe Color" type="Color">#f9f9f9ff</Property>
+			<Property name="striped" displayName="Striped Rows" type="Bool">false</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color">#ddddddff</Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+			<Property name="bordered" displayName="Border All" type="Bool">false</Property>
+			<Property name="topBorder" displayName="Border Top" type="Bool">false</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="contentText" displayName="Text Content" type="PlainText" p:editInfo="({targetName: 'content', bound: Bound.fromBox($box, 0, 5), font: $textFont, align: new Alignment(0, 0), multi: true})"><![CDATA[Title | Director | Year
+The Wizard of Oz | Victor Fleming | 1939
+The Third Man | Carol Reed | 1949
+Citizen Kane | Orson Welles | 1941]]></Property>
+			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">0,1</Property>
+			<Property name="header" displayName="Header" type="Bool">true</Property>
+		</PropertyGroup>
+	</Properties>
+
+	<Behaviors>
+		<For ref="bg">
+			<Bound>Bound.fromBox($box)</Bound>
+			<Fill>$fillColor</Fill>
+		</For>
+
+		<For ref="content">
+			<Bound>new Bound(0, 0, $box.w, $box.h)</Bound>
+		</For>
+
+		<For ref="table">
+			<Color>$textColor</Color>
+			<Font>$textFont</Font>
+
+			<CustomStyle>
+				<Arg>"width"</Arg>
+				<Arg>$box.w + "px"</Arg>
+			</CustomStyle>
+			<CustomStyle>
+				<Arg>"height"</Arg>
+				<Arg>$box.h + "px"</Arg>
+			</CustomStyle>
+			<CustomStyle>
+				<Arg>"border-collapse"</Arg>
+				<Arg>"collapse"</Arg>
+			</CustomStyle>
+
+			<DomContent>
+				<![CDATA[
+
+				var rows = $contentText.value.split(/[\r\n]+/);
+
+				var specs = [];
+				var header = false;
+
+				for (var i = 0; i < rows.length; i++) {
+					var columns = rows[i].split(/\|/);
+
+					header = (i == 0) && $header.value;
+					var rowCss = new CSS();
+
+					var row = {
+						_name: "tr",
+						_uri: "http://www.w3.org/1999/xhtml",
+						style: rowCss,
+						_children: []
+					};
+
+					if ($striped.value && i % 2 != 0) {
+						rowCss.set("background", $stripeColor.toRGBString());
+					}
+
+					for (var j = 0; j < columns.length; j++) {
+						var css = new CSS();
+						var text = columns[j];
+
+						css.set("padding", $condensed.value ? "4px" : "8px");
+						collection.setCssTextAlignment(css, $textAlign.h, $textAlign.v);
+
+						if ($bordered.value) {
+							css.set("border", $strokeStyle.w + "px solid " + $strokeColor.toRGBString());
+						}
+
+						if (header) {
+							css.set("border-bottom", $strokeStyle.w * 2 + "px solid " + $strokeColor.toRGBString());
+							css.set("font-weight", "bold");
+						}
+
+						if (i > 0 || $topBorder.value) {
+							css.set("border-top", $strokeStyle.w + "px solid " + $strokeColor.toRGBString());
+						}
+
+						row._children.push({
+							_name: header ? "th" : "td",
+							_uri: "http://www.w3.org/1999/xhtml",
+							_text: text,
+							style: css
+						});
+					}
+
+					specs.push(row);
+				}
+
+				Dom.newDOMFragment(specs);
+				]]>
+			</DomContent>
+
+			<Color>$textColor</Color>
+		</For>
+	</Behaviors>
+
+	<p:Content xmlns:p="http://www.evolus.vn/Namespace/Pencil" xmlns="http://www.w3.org/2000/svg">
+		<rect id="bg" />
+
+		<foreignObject id="content">
+			<div xmlns="http://www.w3.org/1999/xhtml" >
+				<table id="table">
+						<!-- content -->
+				</table>
+			</div>
+		</foreignObject>
+	</p:Content>
+</Shape>
 
 <Shape id="Well" displayName="Well" icon="Icons/Well.png">
 	<Properties>
