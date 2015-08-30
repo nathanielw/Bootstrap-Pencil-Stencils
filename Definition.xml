@@ -695,6 +695,67 @@ _Disabled Item]]></Property>
 	</p:Content>
 </Shape>
 
+<Shape id="Radio" displayName="Radio" icon="Icons/Radio.png">
+	<Properties>
+		<PropertyGroup>
+			<Property name="box" type="Dimension">90,16</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Text">
+			<Property name="textContent" displayName="Text Content" type="PlainText"><![CDATA[Radio]]></Property>
+			<Property name="textFont" displayName="Text Font" type="Font"><E>$$textFont</E></Property>
+			<Property name="textColor" displayName="Text Color" type="Color"><E>$$gray</E></Property>
+			<Property name="textAlign" displayName="Text Alignment" type="Alignment">0,1</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Background">
+			<Property name="fillColor" displayName="Color" type="Color">#ffffff00</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Dot">
+			<Property name="checkColor" displayName="Dot Color" type="Color"><E>$$gray</E></Property>
+			<Property name="checked" displayName="Selected" type="Bool">false</Property>
+		</PropertyGroup>
+		<PropertyGroup name="Border">
+			<Property name="strokeColor" displayName="Border Color" type="Color"><E>$$strokeColor</E></Property>
+			<Property name="strokeStyle" displayName="Border Style" type="StrokeStyle">1|</Property>
+		</PropertyGroup>
+	</Properties>
+	<Behaviors>
+		<For ref="box">
+			<Attr>
+				<Arg>"cy"</Arg>
+				<Arg>$box.h / 2</Arg>
+			</Attr>
+			<Fill>$fillColor</Fill>
+			<StrokeColor>$strokeColor</StrokeColor>
+			<StrokeStyle>$strokeStyle</StrokeStyle>
+		</For>
+		<For ref="tick">
+			<Attr>
+				<Arg>"cy"</Arg>
+				<Arg>$box.h / 2</Arg>
+			</Attr>
+			<Visibility>$checked</Visibility>
+			<Fill>$checkColor</Fill>
+		</For>
+		<For ref="text">
+			<Font>$textFont</Font>
+			<Fill>$textColor</Fill>
+			<Color>$textColor</Color>
+			<TextContent>$textContent</TextContent>
+			<BoxFit>
+				<Arg>new Bound(22, 0, $box.w - 22, $box.h)</Arg>
+				<Arg>$textAlign</Arg>
+			</BoxFit>
+		</For>
+	</Behaviors>
+
+	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"
+									xmlns="http://www.w3.org/2000/svg">
+		<ellipse id="box" cx="8px" cy="8px" rx="8px" ry="8px"/>
+		<ellipse id="tick" cx="8px" cy="8px" rx="3.5px" ry="3.5px"/>
+		<text id="text"/>
+	</p:Content>
+</Shape>
+
 <Shape id="Label" displayName="Label" icon="Icons/Label.png">
 	<Properties>
 		<PropertyGroup>
