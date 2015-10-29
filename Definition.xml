@@ -1207,9 +1207,9 @@ _Disabled Item]]></Property>
 			<Property name="topBorder" displayName="Border Top" type="Bool">false</Property>
 		</PropertyGroup>
 		<PropertyGroup name="Text">
-			<Property name="contentText" displayName="Text Content" type="RichText" p:editInfo="({targetName: 'content', bound: Bound.fromBox($box, 0, 5), font: $textFont, align: new Alignment(0, 0), multi: true})"><![CDATA[Title | Director | Year
-The Wizard of Oz | Victor Fleming | 1939
-The Third Man | Carol Reed | 1949
+			<Property name="contentText" displayName="Text Content" type="RichText" p:editInfo="({targetName: 'content', bound: Bound.fromBox($box, 0, 5), font: $textFont, align: new Alignment(0, 0), multi: true})"><![CDATA[Title | Director | Year<br />
+The Wizard of Oz | Victor Fleming | 1939<br />
+The Third Man | Carol Reed | 1949<br />
 Citizen Kane | Orson Welles | 1941]]></Property>
 			<Property name="textFont" displayName="Default Font" type="Font"><E>$$textFont</E></Property>
 			<Property name="textColor" displayName="Text Color" type="Color"><E>$$textColor</E></Property>
@@ -1248,7 +1248,7 @@ Citizen Kane | Orson Welles | 1941]]></Property>
 			<DomContent>
 				<![CDATA[
 
-				var rows = $contentText.value.split(/[\r\n]+/);
+				var rows = $contentText.value.split("<br />");
 
 				var specs = [];
 				var header = false;
@@ -1290,6 +1290,7 @@ Citizen Kane | Orson Welles | 1941]]></Property>
 							css.set("border-top", $strokeStyle.w + "px solid " + $strokeColor.toRGBString());
 						}
 
+						stencilDebug("cell text: " + text);
 						row._children.push({
 							_name: header ? "th" : "td",
 							_uri: "http://www.w3.org/1999/xhtml",
