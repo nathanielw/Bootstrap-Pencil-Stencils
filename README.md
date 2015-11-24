@@ -1,10 +1,14 @@
-# Bootstrap-Pencil-Stencils
+# Bootstrap Pencil Stencils
 
 UI components from the Bootstrap front-end framework as a Pencil stencil collection
 
 See [#1](/../../issues/1) for a full list of included components - requests & contributions welcome!
 
 *Check out my other stencil collections for Pencil at [nathanielw.github.io/pencil-stencils](http://nathanielw.github.io/pencil-stencils/)*
+
+![Example mockup made with the collection](/misc/preview.png)
+
+_Some of the included components - see [#1](/../../issues/1) for a full list_
 
 ## Installation
 1. Download the zip for the [latest release](https://github.com/nathanielw/Bootstrap-Pencil-Stencils/releases/latest).
