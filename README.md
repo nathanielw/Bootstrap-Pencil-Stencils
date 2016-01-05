@@ -11,7 +11,7 @@ See [#1](/../../issues/1) for a full list of included components - requests & co
 _Some of the included components - see [#1](/../../issues/1) for a full list_
 
 ## Installation
-1. Download the zip for the [latest release](https://github.com/nathanielw/Bootstrap-Pencil-Stencils/releases/latest).
+1. Download the zip for the [latest release](https://github.com/nathanielw/Bootstrap-Pencil-Stencils/releases/latest). (Make sure you grab the _bootstrap-pencil-stencils-vx.x.x.zip_ file, **not** the source code zip).
 2. In Pencil, install the .zip via _Tools_ > _Install new collection..._
 
 ### Updating
