@@ -19,3 +19,8 @@ Right-click on the collection in Pencil's sidebar and choose _Uninstall this col
 
 ## Notes
 A lot of the elements provide variations which can be accessed by right-clicking on the element once it's on the canvas.
+
+## License
+Released under the MIT License - see `LICENSE` for full text.
+
+A link back here is appreciated when sharing mockups/images created with this collection, but not required.
