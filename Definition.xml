@@ -1453,11 +1453,11 @@ Citizen Kane | Orson Welles | 1941]]></Property>
 	<Behaviors>
 		<For ref="area">
 			<Box>$box</Box>
-			<Radius>$radius.x</Radius>
+			<Radius><Arg>$radius.x</Arg><Arg>$radius.x</Arg></Radius>
 		</For>
 
 		<For ref="clipRect">
-			<Bound>new Bound($box.x, $box.x, $progress.x, $box.h)</Bound>
+			<Bound>new Bound(0, 0, $progress.x, $box.h)</Bound>
 		</For>
 
 		<For ref="bg">
@@ -1485,7 +1485,7 @@ Citizen Kane | Orson Welles | 1941]]></Property>
 
 	<p:Content	xmlns:p="http://www.evolus.vn/Namespace/Pencil"
 									xmlns="http://www.w3.org/2000/svg">
-		<def>
+		<defs>
 			<rect id="area" />
 
 			<clipPath id="progressClip">
@@ -1517,7 +1517,7 @@ Citizen Kane | Orson Welles | 1941]]></Property>
 			patternTransform="rotate(-45)" >
 				<rect x="0" y="0" width="14px" height="20px" style="opacity:0.15; stroke: none; fill: #ffffff" />
 			</pattern>
-		</def>
+		</defs>
 		<use xlink:href="#area" id="bg" style="filter:url(#innerShadow)" />
 		<use xlink:href="#area" id="fg" style="clip-path: url(#progressClip);" />
 		<use xlink:href="#area" id="stripes" style="clip-path: url(#progressClip); fill: url(#stripes);" />
