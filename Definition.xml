@@ -1192,6 +1192,7 @@ _Disabled Item]]></Property>
 	<Properties>
 		<PropertyGroup>
 			<Property name="box" type="Dimension">500,135</Property>
+			<Property name="useHtmlContent" displayName="Use HTML Content" type="Bool">false</Property>
 			<Property name="condensed" displayName="Condensed" type="Bool">false</Property>
 		</PropertyGroup>
 
@@ -1290,12 +1291,19 @@ Citizen Kane | Orson Welles | 1941]]></Property>
 							css.set("border-top", $strokeStyle.w + "px solid " + $strokeColor.toRGBString());
 						}
 
-						row._children.push({
+						var cell = {
 							_name: header ? "th" : "td",
 							_uri: "http://www.w3.org/1999/xhtml",
-							_text: text,
 							style: css
-						});
+						}
+
+						if($useHtmlContent.value) {
+							cell._html = text
+						} else {
+							cell._text = text
+						}
+
+						row._children.push(cell);
 					}
 
 					specs.push(row);
