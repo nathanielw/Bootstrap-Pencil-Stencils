@@ -1,5 +1,13 @@
 # Bootstrap Pencil Stencils
 
+----
+
+## ⚠️ No longer actively developed
+Other commitments and the fact I no longer use Pencil mean this repo is no longer being actively developed.
+Pull-requests with new features/fixes are still welcome, as are new issues, but my responses might not be the speediest 🙂
+
+----
+
 UI components from the Bootstrap front-end framework as a Pencil stencil collection
 
 See [#1](/../../issues/1) for a full list of included components - requests & contributions welcome!
